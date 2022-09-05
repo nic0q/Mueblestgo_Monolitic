@@ -1,0 +1,16 @@
+5(TDC)6
+6(Tingeso)7 
+7(Estaca)8
+8(Ejercicio)9
+9(TBD)10
+10(Wix)11
+11(Tingeso)12
+12()1
+1()2
+2()3
+- Tingeso: Que todo funcione (Jira, leer, entender)
+- TDC (Automatas, mandar enunciado al Vicente)
+- Estaca (Estudiar chisq onmibus hacer apunte manual (Desde el pasado la lectura 5)
+- TBD (Estudiar | Hacer el script y repartir las tareas)
+- Wix (Ver donde estoy parado)
+- 
