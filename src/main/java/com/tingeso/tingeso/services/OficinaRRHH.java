@@ -1,5 +1,3 @@
 package com.tingeso.tingeso.services;
 
-public class OficinaRRHH {
-  
-}
+public class OficinaRRHH {}
