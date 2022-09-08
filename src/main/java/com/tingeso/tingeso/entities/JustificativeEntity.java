@@ -1,8 +1,10 @@
-package com.tingeso.tingeso.models;
+package com.tingeso.tingeso.entities;
 
+import java.sql.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -14,18 +16,24 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ExtraHoursEntity {
+public class JustificativeEntity {
 
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id", unique = true, nullable = false)
   private Long id;
 
-  private Integer extra_minutes;
+  private Date date;
+  private String description;
   private Integer employee_id;
 
-  public ExtraHoursEntity(Integer extra_minutes, Integer employee_id) {
-    this.extra_minutes = extra_minutes;
+  public JustificativeEntity(
+    Date date,
+    String description,
+    Integer employee_id
+  ) {
+    this.date = date;
+    this.description = description;
     this.employee_id = employee_id;
   }
 }

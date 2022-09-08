@@ -20,7 +20,6 @@ public class ReadfileService {
   String quit_time = "18:00"; // Todos los empleados deben salir a las 18:00 (Pueden haber horas extras)
   String minutes_per_day = "720"; // Todos los empleados deben trabajar 720 minutos (10 horas)
   List<String> laboral_days = Arrays.asList("lun", "mar", "mié", "jue", "vie"); // 5 laboral days
-
   public static void main(String args[]) throws Exception {
     InputStream ins = new FileInputStream("src/main/resources/txt/data.txt");
     ArrayList<String> dias = new ArrayList<String>();

@@ -1,13 +1,13 @@
 package com.tingeso.tingeso.repostories;
 
-import com.tingeso.tingeso.entities.EmployeeEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 
+import com.tingeso.tingeso.entities.ExtraHoursEntity;
+
 @Repository
 @EnableJpaRepositories
-public interface EmployeeRepository
-  extends JpaRepository<EmployeeEntity, Integer> {
-  public EmployeeEntity findByRut(String rut);
+public interface ExtraHoursRepository extends JpaRepository<ExtraHoursEntity, Integer> {
+  
 }

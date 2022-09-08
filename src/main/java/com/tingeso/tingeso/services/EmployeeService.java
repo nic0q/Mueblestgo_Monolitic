@@ -1,6 +1,6 @@
 package com.tingeso.tingeso.services;
 
-import com.tingeso.tingeso.models.EmployeeEntity;
+import com.tingeso.tingeso.entities.EmployeeEntity;
 import com.tingeso.tingeso.repostories.EmployeeRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

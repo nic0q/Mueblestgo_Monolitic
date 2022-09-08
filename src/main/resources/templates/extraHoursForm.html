@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>User Registration</title>
+</head>
+<body>
+    <div align="center">
+        <h1>Extra Hours</h1>
+        <form action="#" th:action="@{/extra_hours_form}" method="post" th:object="${extra}">
+            <label>Empleado RUT</label>
+            <input type="text" th:field="*{rut_employee}"/><br/>
+            <label>Horas Extra</label>
+            <input type="text" th:field="*{extra_minutes}"/><br/>
+            <button type="submit">Register</button>    
+        </form>
+    </div>
+</body>
+</html>
