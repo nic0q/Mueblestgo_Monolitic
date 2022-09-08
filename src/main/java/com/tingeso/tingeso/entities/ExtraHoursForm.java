@@ -13,5 +13,4 @@ public class ExtraHoursForm {
   }
   private @Getter @Setter String rut_employee;
   private @Getter @Setter Integer extra_minutes;
-  
 }

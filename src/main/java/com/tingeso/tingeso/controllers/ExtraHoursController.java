@@ -20,7 +20,7 @@ public class ExtraHoursController {
   @GetMapping("/extra-hours-form")
   public String extraHoursForm(Model model) {
     model.addAttribute("extra", new ExtraHoursForm());
-    return "extra_hours_form";
+    return "extraHoursForm";
   }
 
   @PostMapping("/extra-hours-form")
@@ -31,6 +31,6 @@ public class ExtraHoursController {
     model.addAttribute("extra", extra_form);
     System.out.println(extra_form.toString());
     extraHoursService.verify_form(extra_form);
-    return "extra_hours_form";
+    return "extraHoursForm";
   }
 }
