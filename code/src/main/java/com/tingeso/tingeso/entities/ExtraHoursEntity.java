@@ -6,15 +6,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "extra_hours")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+
 public class ExtraHoursEntity {
 
   @Id
@@ -23,9 +20,9 @@ public class ExtraHoursEntity {
   private Long id;
 
   private Integer extra_minutes;
-  private Integer employee_id;
+  private Long employee_id;
 
-  public ExtraHoursEntity(Integer extra_minutes, Integer employee_id) {
+  public ExtraHoursEntity(Integer extra_minutes, Long employee_id) {
     this.extra_minutes = extra_minutes;
     this.employee_id = employee_id;
   }
