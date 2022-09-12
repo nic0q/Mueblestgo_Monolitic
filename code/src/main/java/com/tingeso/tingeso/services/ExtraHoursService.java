@@ -16,9 +16,15 @@ public class ExtraHoursService {
   @Autowired
   EmployeeRepository employeeRepository;
 
-  public boolean save_extra_hours(ExtraHoursForm extra) {
-    if (employeeRepository.findByRut(extra.getRut_employee()) != null) {
-      ExtraHoursEntity entry = new ExtraHoursEntity(extra.getExtra_minutes(), employeeRepository.findByRut(extra.getRut_employee()).getId());
+  public boolean exists_employee(ExtraHoursForm extra_form) {
+    if (employeeRepository.findByRut(extra_form.getRut_employee()) != null) {
+      return true;
+    }
+    return false;
+  }
+  public boolean save_extra_hours(ExtraHoursForm extra_for) {
+    if (exists_employee(extra_for)) {
+      ExtraHoursEntity entry = new ExtraHoursEntity(extra_for.getExtra_minutes(), employeeRepository.findByRut(extra_for.getRut_employee()).getId());
       extraHoursRepository.save(entry);
       System.out.println("Horas extra guardadas correctamente " + entry.toString());
       return true;

@@ -15,7 +15,6 @@ import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class ReadfileService {
-
   String entry_time = "08:00"; // Todos los empleados deben llegar a las 8:00
   String quit_time = "18:00"; // Todos los empleados deben salir a las 18:00 (Pueden haber horas extras)
   String minutes_per_day = "720"; // Todos los empleados deben trabajar 720 minutos (10 horas)

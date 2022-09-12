@@ -13,12 +13,13 @@
             </tr>
         </thead>
         <tbody>
-        <tr th:if="${employees.empty}">
+            <tr th:if="${employees.empty}">
                 <td colspan="2"> No employees Available </td>
             </tr>
             <tr th:each="employee : ${employees}">
                 <td><span th:text="${employee.first_name}"> Title </span></td>
                 <td><span th:text="${employee.last_name}"> Author </span></td>
+                <td><span th:text="${employee.rut}"> Author </span></td>
             </tr>
         </tbody>
     </table>
