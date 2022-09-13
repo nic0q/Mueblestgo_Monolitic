@@ -11,17 +11,12 @@
 	integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
 	crossorigin="anonymous">
 
-<title>Archivos</title>
 </head>
 <body>
-	<h1>Carga de archivos</h1>
-	<div class="container">
-		<form th:action="@{/cargar}" method="post" enctype="multipart/form-data">
-			<input type="file" class="form-control" name="archivos"> <input
-				type="submit" value="Carga">
-		</form>
-		
-		<h3 th:text="${mensaje}"></h3>
-	</div>
+	<h1>Seleccione una operacion</h1>
+	<button ><a href="/extra-hours-form">Horas extra</a></button>
+  <button ><a href="/extra-hours-form">Justificativo</a></button>
+  <button ><a href="/load-txt">Cargar archivo</a></button>
+  <button><a href="/employees">Todos los empleados</a></button>
 </body>
 </html>

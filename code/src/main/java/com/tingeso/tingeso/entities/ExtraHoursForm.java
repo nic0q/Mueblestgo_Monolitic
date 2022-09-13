@@ -17,9 +17,9 @@ public class ExtraHoursForm {
   }
   private @Getter @Setter
     @NotEmpty(message = "El RUT no puede estar vacio")
-    @Size(min=10,max=10,message = "El rut debe estar en el formato  correcto (Puntos y guión)")
+    @Size(min=10,max=10,message = "Ingrese el rut en el formato (Puntos y guión)")
     String rut_employee;
   private @Getter @Setter
-    @NotNull(message = "Las horas extra no pueden estar vacias")
+    @NotNull(message = "Debe ingresar horas extra")
     Integer extra_minutes;
 }
