@@ -36,13 +36,14 @@ public class OfficeRRHHController {
       employees.get(i).getLast_name(),
       employees.get(i).getCategory(),
       employees.get(i).getService_years(),
-      officeRRHH.get_sueldo_base(employees.get(i).getId()),
-      officeRRHH.calcular_bonificaciones(employees.get(i).getId()),
-      officeRRHH.calcular_sueldo_horas_extra(employees.get(i).getId()),
-      officeRRHH.calcular_descuentos(employees.get(i).getId()),
-      officeRRHH.calcular_sueldo_bruto(employees.get(i).getId()),
-      0,
-      0
+      officeRRHH.get_sueldo_base(employees.get(i).getRut()),
+      officeRRHH.calcular_bonificaciones(employees.get(i).getRut()),
+      officeRRHH.calcular_sueldo_horas_extra(employees.get(i).getRut()),
+      officeRRHH.calcular_descuentos(employees.get(i).getRut()),
+      officeRRHH.calcular_sueldo_bruto(employees.get(i).getRut()),
+      officeRRHH.calcular_cotizacion_previsional(officeRRHH.calcular_sueldo_bruto(employees.get(i).getRut())),
+      officeRRHH.calcular_cotizacion_salud(officeRRHH.calcular_sueldo_bruto(employees.get(i).getRut())),
+      officeRRHH.calcular_sueldo_final(officeRRHH.calcular_sueldo_bruto(employees.get(i).getRut()))
       );
       sueldos.add(planillaSueldos);
     }

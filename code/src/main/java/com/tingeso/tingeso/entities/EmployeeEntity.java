@@ -20,24 +20,10 @@ import lombok.Setter;
 public class EmployeeEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id", unique = true, nullable = false)
-  @Getter @Setter private Integer id;
+  @Column(name = "rut", unique = true, nullable = false)
   @Getter @Setter private String rut;
   @Getter @Setter private String name;
   @Getter @Setter private String last_name;
   @Getter @Setter private String category;
   @Getter @Setter private Integer service_years;
-  public EmployeeEntity(
-    String rut,
-    String name,
-    String last_name,
-    String category,
-    Integer service_years
-  ) {
-    this.rut = rut;
-    this.name = name;
-    this.last_name = last_name;
-    this.category = category;
-    this.service_years = service_years;
-  }
 }

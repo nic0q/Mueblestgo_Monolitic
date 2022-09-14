@@ -6,6 +6,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,6 +16,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "extra_hours")
 @Data
+@AllArgsConstructor
 public class ExtraHoursEntity {
 
   @Id
@@ -21,10 +25,8 @@ public class ExtraHoursEntity {
   private Integer id;
 
   private @Getter @Setter Integer extra_hours;
-  private @Getter @Setter Integer employee_id;
-
-  public ExtraHoursEntity(Integer extra_hours, Integer employee_id) {
-    this.extra_hours = extra_hours;
-    this.employee_id = employee_id;
+  private @Getter @Setter String rut_employee;
+  public ExtraHoursEntity(@NotNull(message = "Debe ingresar horas extra") Integer extra_hours2, String rut_employee2) {
   }
+
 }

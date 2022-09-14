@@ -21,10 +21,4 @@ public class EmployeeController {
     model.addAttribute("employees", employeeService.getEmployees());
     return "employees";
   }
-
-  @GetMapping("/insertTest")
-  public String insertTest() {
-    employeeService.insertEmployee();
-    return "employees";
-  }
 }

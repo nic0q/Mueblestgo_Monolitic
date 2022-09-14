@@ -21,19 +21,20 @@ public class JustificativeEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id", unique = true, nullable = false)
-  private Long id;
+  private Integer id;
 
   private Date date;
   private String description;
-  private Integer employee_id;
+  private String rut_employee;
 
   public JustificativeEntity(
     Date date,
     String description,
-    Integer employee_id
+    Integer employee_id,
+    String rut_employee
   ) {
     this.date = date;
     this.description = description;
-    this.employee_id = employee_id;
+    this.rut_employee = rut_employee;
   }
 }

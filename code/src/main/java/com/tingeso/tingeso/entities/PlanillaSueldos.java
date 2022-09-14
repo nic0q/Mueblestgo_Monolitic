@@ -14,11 +14,12 @@ public class PlanillaSueldos {
   private @Getter @Setter String apellido_empleado;
   private @Getter @Setter String categoria;
   private @Getter @Setter Integer anios_servicio;
-  private @Getter @Setter float sueldo_fijo;
-  private @Getter @Setter float bonificacion;
-  private @Getter @Setter float pago_horas_extras;
-  private @Getter @Setter float descuento;
-  private @Getter @Setter float sueldo_bruto;
-  private @Getter @Setter float cotizacion_previsional;
-  private @Getter @Setter float sueldo_final;
+  private @Getter @Setter double sueldo_fijo;
+  private @Getter @Setter double bonificacion;
+  private @Getter @Setter double pago_horas_extras;
+  private @Getter @Setter double descuento;
+  private @Getter @Setter double sueldo_bruto;
+  private @Getter @Setter double cotizacion_previsional;
+  private @Getter @Setter double cotizacion_salud;
+  private @Getter @Setter double sueldo_final;
 }

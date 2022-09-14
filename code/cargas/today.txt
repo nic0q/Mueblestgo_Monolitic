@@ -1,8 +1,0 @@
-5(TDC)6
-6(Tingeso)7 
-7(Estaca)8
-8(Ejercicio)9
-9(TBD)10
-11(Tingeso)12
-- TDC (Automatas, mandar enunciado al Vicente)
-- Estaca (Estudiar chisq onmibus hacer apunte manual (Desde el pasado la lectura 5)

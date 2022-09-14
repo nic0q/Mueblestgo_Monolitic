@@ -23,6 +23,9 @@ public class ReadilyService {
   @Autowired
   private EmployeeService employeeService;
 
+  @Autowired
+  private WorkedDaysService workedDaysService;
+
   static String ENTRY_TIME = "08:00"; // Todos los empleados deben llegar a las 8:00
   static String EXIT_TIME = "18:00"; // Todos los empleados deben salir a las 18:00 (Pueden haber horas extras)
   String minutes_per_day = "600"; // Todos los empleados deben trabajar 600 minutos (10 horas)
@@ -33,7 +36,7 @@ public class ReadilyService {
   static DateFormat hours_format = new SimpleDateFormat("hh");
 
   public boolean readFile() throws FileNotFoundException, ParseException {
-    InputStream ins = new FileInputStream("src/main/resources/txt/data.txt");
+    InputStream ins = new FileInputStream("cargas/data.txt");
     ArrayList<String> dias = new ArrayList<String>();
     Map<String, ArrayList<String>> ruts_map = new HashMap<String, ArrayList<String>>();
     try (Scanner obj = new Scanner(ins)) {
@@ -54,10 +57,11 @@ public class ReadilyService {
         } else {
           ruts_map.get(rut).add(hora); // hashmap exit time
           System.out.println("DIA: " + date + " RUT: "+"[" + rut +"]"+ employeeService.getEmployeeByRut(rut) +
-          " ENTRADA: " + ruts_map.get(rut).get(0) +" SALIDA: "+ruts_map.get(rut).get(1)
+          " ENTRADA: " + ruts_map.get(rut).get(0) +" SALIDA: " + ruts_map.get(rut).get(1)
           +" TARDANZA: "+ getLateMinutes(ENTRY_TIME,ruts_map.get(rut).get(0)) +
           " TIEMPO: " + getWorkedHours(ruts_map.get(rut).get(0),ruts_map.get(rut).get(1))
           + "HORAS EXTRA: " + extraHours(EXIT_TIME,ruts_map.get(rut).get(1)));
+          workedDaysService.insert_worked_day(rut,date,ruts_map.get(rut).get(0), ruts_map.get(rut).get(1),  getWorkedHours(ruts_map.get(rut).get(0),ruts_map.get(rut).get(1)), extraHours(EXIT_TIME,ruts_map.get(rut).get(1)), getLateMinutes(ENTRY_TIME,ruts_map.get(rut).get(0)));
         }
       }
     }
@@ -65,18 +69,18 @@ public class ReadilyService {
   }
   // I: 2 Strings con formato HH:mm
   // O: Long con la cantidad de minutos trabajados
-  public static long getLateMinutes(String start_t, String exit_t) throws ParseException {
+  public static Integer getLateMinutes(String start_t, String exit_t) throws ParseException {
     Date entrada = hours_mins.parse(start_t);
     Date salida = hours_mins.parse(exit_t);
     long horas_trabajadas = salida.getTime() - entrada.getTime();
     if(TimeUnit.MILLISECONDS.toMinutes(horas_trabajadas) < 0){ // Si entro antes se toma como hora de entrada (8:00 am)
       return 0;
     }
-    return TimeUnit.MILLISECONDS.toMinutes(horas_trabajadas);
+    return (int) TimeUnit.MILLISECONDS.toMinutes(horas_trabajadas);
   }
   // I: 2 Strings con formato HH:mm
   // O: Long con la cantidad de minutos trabajados
-  public static long getWorkedHours(String start_t, String end_t) throws ParseException {
+  public static Integer getWorkedHours(String start_t, String end_t) throws ParseException {
     Date entrada, salida;
     entrada = hours_format.parse(start_t);
     salida = hours_format.parse(end_t);
@@ -86,17 +90,17 @@ public class ReadilyService {
     if(getLateMinutes(end_t,EXIT_TIME) >= 0 && getLateMinutes(end_t,EXIT_TIME) <= 15){ // si sale de las 17:45 para adelante se permite como salida a las 18:00
       salida = hours_format.parse(EXIT_TIME);
     }
-    return TimeUnit.MILLISECONDS.toHours(salida.getTime() - entrada.getTime());
+    return (int) TimeUnit.MILLISECONDS.toHours(salida.getTime() - entrada.getTime());
   }
   // I: 2 Strings con formato HH:mm
   // O: Long con la cantidad de minutos trabajados
-  public static Long extraHours(String start_t, String exit_t)throws ParseException {
+  public static Integer extraHours(String start_t, String exit_t)throws ParseException {
     Date entrada = hours_mins.parse(start_t);
     Date salida = hours_mins.parse(exit_t);
     long horas_trabajadas = salida.getTime() - entrada.getTime();
     if(horas_trabajadas <= 0){
-      return (long) 0;
+      return 0;
     }
-    return TimeUnit.MILLISECONDS.toMinutes(horas_trabajadas);
+    return (int) TimeUnit.MILLISECONDS.toMinutes(horas_trabajadas);
   }
 }

@@ -20,6 +20,7 @@
                 <th> Descuento </th>
                 <th> Sueldo Bruto </th>
                 <th> Cotización Previsional </th>
+                <th> Cotización Salud </th>
                 <th> Sueldo Final </th>
         </thead>
         <tbody>
@@ -27,18 +28,19 @@
                 <td colspan="2"> No sueldos disponibles </td>
             </tr>
             <tr th:each="celda_sueldo : ${planilla_sueldos}">
-                <td><span th:text="${celda_sueldo.rut_empleado}"> RUT </span></td>
-                <td><span th:text="${celda_sueldo.nombre_empleado}"> Sueldo </span></td>
-                <td><span th:text="${celda_sueldo.apellido_empleado}"> Sueldo </span></td>
-                <td><span th:text="${celda_sueldo.categoria}"> Sueldo </span></td>
-                <td><span th:text="${celda_sueldo.anios_servicio}"> Sueldo </span></td>
-                <td><span th:text="${celda_sueldo.sueldo_fijo}"> Sueldo </span></td>
-                <td><span th:text="${celda_sueldo.bonificacion}"> Sueldo </span></td>
-                <td><span th:text="${celda_sueldo.pago_horas_extras}"> Sueldo </span></td>
-                <td><span th:text="${celda_sueldo.descuento}"> Sueldo </span></td>
-                <td><span th:text="${celda_sueldo.sueldo_bruto}"> Sueldo </span></td>
-                <td><span th:text="${celda_sueldo.cotizacion_previsional}"> Sueldo </span></td>
-                <td><span th:text="${celda_sueldo.sueldo_final}"> Sueldo </span></td>
+                <td><span th:text="${celda_sueldo.rut_empleado}">RUT</span></td>
+                <td><span th:text="${celda_sueldo.nombre_empleado}">Nombre Empleado</span></td>
+                <td><span th:text="${celda_sueldo.apellido_empleado}">Apellido Empleado</span></td>
+                <td><span th:text="${celda_sueldo.categoria}">Categoría</span></td>
+                <td><span th:text="${celda_sueldo.anios_servicio}">Años Servicio</span></td>
+                <td><span th:text="${celda_sueldo.sueldo_fijo}">Sueldo Fijo</span></td>
+                <td><span th:text="${celda_sueldo.bonificacion}">Bonificación</span></td>
+                <td><span th:text="${celda_sueldo.pago_horas_extras}">Pago Horas Extra</span></td>
+                <td><span th:text="${celda_sueldo.descuento}">Descuento</span></td>
+                <td><span th:text="${celda_sueldo.sueldo_bruto}">Sueldo Bruto</span></td>
+                <td><span th:text="${celda_sueldo.cotizacion_previsional}">Cotización Previsional</span></td>
+                <td><span th:text="${celda_sueldo.cotizacion_salud}">Cotización Salud</span></td>
+                <td><span th:text="${celda_sueldo.sueldo_final}">Sueldo</span></td>
             </tr>
         </tbody>
       </table>
