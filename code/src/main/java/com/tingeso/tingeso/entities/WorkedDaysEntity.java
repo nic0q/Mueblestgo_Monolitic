@@ -23,10 +23,10 @@ public class WorkedDaysEntity {
   @Column(name = "id", unique = true, nullable = false)
   private Long id;
   private Date date;
-  private Integer employee_id;
+  private Integer id_employee;
   private String t_entry;
   private String t_exit;
-  private Integer worked_minutes;
-  private Integer extra_minutes;
+  private Integer worked_hours;
+  private Integer extra_hours;
   private Integer late_minutes;
 }

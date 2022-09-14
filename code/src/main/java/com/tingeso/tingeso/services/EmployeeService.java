@@ -15,7 +15,12 @@ public class EmployeeService {
   public List<EmployeeEntity> getEmployees() {
     return (List<EmployeeEntity>) employeeRepository.findAll();
   }
-
+  public EmployeeEntity getEmployeeByRut(String rut) {
+    return employeeRepository.findByRut(rut);
+  }
+  public EmployeeEntity getEmployeeById(Integer id) {
+    return employeeRepository.findById(id);
+  }
   public void insertEmployee() {
     EmployeeEntity employee = new EmployeeEntity("a", "a", "a", "a", "a");
     employeeRepository.save(employee);
