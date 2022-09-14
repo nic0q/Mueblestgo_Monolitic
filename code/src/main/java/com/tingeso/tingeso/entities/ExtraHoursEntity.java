@@ -17,12 +17,12 @@ public class ExtraHoursEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id", unique = true, nullable = false)
-  private Long id;
+  private Integer id;
 
   private Integer extra_minutes;
-  private Long employee_id;
+  private Integer employee_id;
 
-  public ExtraHoursEntity(Integer extra_minutes, Long employee_id) {
+  public ExtraHoursEntity(Integer extra_minutes, Integer employee_id) {
     this.extra_minutes = extra_minutes;
     this.employee_id = employee_id;
   }

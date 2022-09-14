@@ -21,7 +21,7 @@ public class EmployeeEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id", unique = true, nullable = false)
-  @Getter @Setter private Long id;
+  @Getter @Setter private Integer id;
   @Getter @Setter private String rut;
   @Getter @Setter private String first_name;
   @Getter @Setter private String last_name;

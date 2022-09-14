@@ -19,10 +19,10 @@ public class EmployeeService {
     return employeeRepository.findByRut(rut);
   }
   public EmployeeEntity getEmployeeById(Integer id) {
-    return employeeRepository.findById(id);
+    return employeeRepository.findById(id).get();
   }
   public void insertEmployee() {
-    EmployeeEntity employee = new EmployeeEntity("a", "a", "a", "a", "a");
+    EmployeeEntity employee = new EmployeeEntity("a", "a", "a", "A", 2);
     employeeRepository.save(employee);
   }
 }

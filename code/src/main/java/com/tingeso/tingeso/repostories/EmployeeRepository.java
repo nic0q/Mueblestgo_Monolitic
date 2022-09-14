@@ -10,4 +10,5 @@ import org.springframework.stereotype.Repository;
 public interface EmployeeRepository
   extends JpaRepository<EmployeeEntity, Integer> {
   public EmployeeEntity findByRut(String rut);
+  // public EmployeeEntity findOne(Integer id);
 }

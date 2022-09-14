@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title>Getting Started: Serving Web Content</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+              <th> RUT </th>
+              <th> Sueldo </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:if="${planilla_sueldos.empty}">
+                <td colspan="2"> No sueldos disponibles </td>
+            </tr>
+            <tr th:each="celda_sueldo : ${planilla_sueldos}">
+                <td><span th:text="${celda_sueldo.rut_empleado}"> RUT </span></td>
+                <td><span th:text="${celda_sueldo.sueldo}"> Sueldo </span></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

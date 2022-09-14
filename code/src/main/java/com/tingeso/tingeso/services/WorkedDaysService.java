@@ -18,8 +18,7 @@ public class WorkedDaysService {
     return (List<WorkedDaysEntity>) workedDaysRepository.findAll();
   }
   public List<WorkedDaysEntity> obtener_dias_trabajados(Integer id_empleado){
-    List<WorkedDaysEntity> dias_trabajados = get_dias_trabajados();
-    return dias_trabajados.stream()
+    return get_dias_trabajados().stream()
       .filter(arg0 -> arg0.getId_employee() == id_empleado)
       .collect(Collectors.toList());
   }
