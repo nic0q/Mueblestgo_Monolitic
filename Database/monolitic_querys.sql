@@ -1,26 +1,26 @@
 show databases;
-
-create database sueldos;
-use tingeso;
-show tables;
+SHOW DATABASES;
+USE tingeso;
+SHOW TABLES;
 CREATE TABlE IF NOT EXISTS employee (
 	id int auto_increment,
     rut char(12),
 	first_name varchar(20) not null,
 	last_name varchar(25) not null,
-    middle_name varchar(20) null,
     category varchar(5) not null,
     PRIMARY KEY(id)
 );
-CREATE TABlE IF NOT EXISTS work_days (
+DROP TABLE employee;
+CREATE TABlE IF NOT EXISTS worked_days (
 	id int auto_increment,
+    id_employee int,
     `date` DATE,
-    `t_start` char(5),
+    `t_entry` char(5),
     `t_exit` char(5),
-    `worked_minutes` int,
-    `extra_minutes` int,
-    employee_id int,
-    FOREIGN KEY(employee_id) REFERENCES employee(id),
+    `worked_hours` int,
+    `extra_hours` int,
+    `late_minutes` int,
+    FOREIGN KEY(id_employee) REFERENCES employee(id),
     PRIMARY KEY(id)
 );
 CREATE TABLE IF NOT EXISTS extra_hours(
@@ -40,7 +40,15 @@ CREATE TABLE IF NOT EXISTS justificative(
 SELECT * FROM employee;
 SELECT * FROM justificative;
 SELECT * FROM extra_hours;
-SELECT * FROM work_days;
-DROP TABLE employee;
+SELECT * FROM worked_days;
 ALTER TABLE justificative ADD description varchar(500);
-INSERT INTO employee(rut, `first_name`,last_name,category,middle_name) VALUES("123","nico","las","A","falso");
+ALTER TABLE employee ADD service_years int;
+INSERT INTO employee(rut, `first_name`,last_name,category,service_years) VALUES("28371904-9","nico","las","A",1);
+INSERT INTO employee(rut, `first_name`,last_name,category,service_years) VALUES("27391503-6","WEON","SOYYO","A",5);
+INSERT INTO employee(rut, `first_name`,last_name,category,service_years) VALUES("21142354-k","JUANITO","KIKA","C",10);
+INSERT INTO employee(rut, `first_name`,last_name,category,service_years) VALUES("12457562-3","JIJAJAJA","las","A",13);
+INSERT INTO employee(rut, `first_name`,last_name,category,service_years) VALUES("11234123-6","ROBERTO","CARLOS","B",20);
+INSERT INTO employee(rut, `first_name`,last_name,category,service_years) VALUES("17765876-2","LOCO","RANDOM","B",18);
+DELETE FROM employee WHERE id > 0;
+DELETE FROM extra_hours WHERE id > 0;
+

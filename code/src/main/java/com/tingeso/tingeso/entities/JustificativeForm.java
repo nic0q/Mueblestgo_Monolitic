@@ -1,5 +1,7 @@
 package com.tingeso.tingeso.entities;
 
+import java.sql.Date;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -9,11 +11,12 @@ import lombok.Setter;
 import lombok.ToString;
 
 @ToString
-public class ExtraHoursForm {
-  public ExtraHoursForm() {}
-  public ExtraHoursForm(String rut_employee, Integer extra_hours) {
+public class JustificativeForm {
+  public JustificativeForm() {}
+  public JustificativeForm(String rut_employee, Date date, String description) {
     this.rut_employee = rut_employee;
-    this.extra_hours = extra_hours;
+    this.date = date;
+    this.description = description;
   }
   private @Getter @Setter
     @NotEmpty(message = "El RUT no puede estar vacio")
@@ -21,5 +24,8 @@ public class ExtraHoursForm {
     String rut_employee;
   private @Getter @Setter
     @NotNull(message = "Debe ingresar horas extra")
-    Integer extra_hours;
+    Date date;
+  private @Getter @Setter
+    @NotNull(message = "Debe ingresar una descripción")
+    String description;
 }

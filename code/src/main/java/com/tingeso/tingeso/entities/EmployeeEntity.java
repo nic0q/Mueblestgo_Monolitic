@@ -23,19 +23,19 @@ public class EmployeeEntity {
   @Column(name = "id", unique = true, nullable = false)
   @Getter @Setter private Integer id;
   @Getter @Setter private String rut;
-  @Getter @Setter private String first_name;
+  @Getter @Setter private String name;
   @Getter @Setter private String last_name;
   @Getter @Setter private String category;
   @Getter @Setter private Integer service_years;
   public EmployeeEntity(
     String rut,
-    String first_name,
+    String name,
     String last_name,
     String category,
     Integer service_years
   ) {
     this.rut = rut;
-    this.first_name = first_name;
+    this.name = name;
     this.last_name = last_name;
     this.category = category;
     this.service_years = service_years;

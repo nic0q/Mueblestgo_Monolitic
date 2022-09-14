@@ -3,14 +3,24 @@
 <head> 
     <title>Getting Started: Serving Web Content</title> 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
 </head>
 <body>
-    <table>
+    <table class="table table-dark text-center">
         <thead>
             <tr>
-              <th> RUT </th>
-              <th> Sueldo </th>
-            </tr>
+                <th> RUT </th>
+                <th> Nombre </th>
+                <th> Apellido </th>
+                <th> Categoria </th>
+                <th> Años Servicio </th>
+                <th> Sueldo Fijo </th>
+                <th> Bonificación </th>
+                <th> Pago Horas Extra </th>
+                <th> Descuento </th>
+                <th> Sueldo Bruto </th>
+                <th> Cotización Previsional </th>
+                <th> Sueldo Final </th>
         </thead>
         <tbody>
             <tr th:if="${planilla_sueldos.empty}">
@@ -18,9 +28,22 @@
             </tr>
             <tr th:each="celda_sueldo : ${planilla_sueldos}">
                 <td><span th:text="${celda_sueldo.rut_empleado}"> RUT </span></td>
-                <td><span th:text="${celda_sueldo.sueldo}"> Sueldo </span></td>
+                <td><span th:text="${celda_sueldo.nombre_empleado}"> Sueldo </span></td>
+                <td><span th:text="${celda_sueldo.apellido_empleado}"> Sueldo </span></td>
+                <td><span th:text="${celda_sueldo.categoria}"> Sueldo </span></td>
+                <td><span th:text="${celda_sueldo.anios_servicio}"> Sueldo </span></td>
+                <td><span th:text="${celda_sueldo.sueldo_fijo}"> Sueldo </span></td>
+                <td><span th:text="${celda_sueldo.bonificacion}"> Sueldo </span></td>
+                <td><span th:text="${celda_sueldo.pago_horas_extras}"> Sueldo </span></td>
+                <td><span th:text="${celda_sueldo.descuento}"> Sueldo </span></td>
+                <td><span th:text="${celda_sueldo.sueldo_bruto}"> Sueldo </span></td>
+                <td><span th:text="${celda_sueldo.cotizacion_previsional}"> Sueldo </span></td>
+                <td><span th:text="${celda_sueldo.sueldo_final}"> Sueldo </span></td>
             </tr>
         </tbody>
-    </table>
+      </table>
+      <a  href="/"> <button type="button" class="btn btn-primary"> Volver </button> </a>
+      
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 </body>
 </html>

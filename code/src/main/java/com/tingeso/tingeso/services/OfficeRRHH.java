@@ -18,7 +18,7 @@ public class OfficeRRHH {
   private EmployeeService employeeService;
   @Autowired
   private WorkedDaysService workedDaysService;
-  public float calcular_sueldo(Integer id_empleado){
+  public float calcular_sueldo_bruto(Integer id_empleado){
     float sueldo = 0;
     sueldo = (get_sueldo_base(id_empleado) + calcular_bonificaciones(id_empleado) + calcular_sueldo_horas_extra(id_empleado) - calcular_descuentos(id_empleado));
     return sueldo;

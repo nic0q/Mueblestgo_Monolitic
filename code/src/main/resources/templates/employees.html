@@ -8,9 +8,10 @@
     <table>
         <thead>
             <tr>
-                <th> Title </th>
-                <th> Author </th>
+                <th> Name </th>
+                <th> Last Name </th>
                 <th> RUT </th>
+                <th> Category </th>
             </tr>
         </thead>
         <tbody>
@@ -18,9 +19,10 @@
                 <td colspan="2"> No employees Available </td>
             </tr>
             <tr th:each="employee : ${employees}">
-                <td><span th:text="${employee.first_name}"> Title </span></td>
+                <td><span th:text="${employee.name}"> Title </span></td>
                 <td><span th:text="${employee.last_name}"> Author </span></td>
                 <td><span th:text="${employee.rut}"> Author </span></td>
+                <td><span th:text="${employee.category}"> Author </span></td>
             </tr>
         </tbody>
     </table>
