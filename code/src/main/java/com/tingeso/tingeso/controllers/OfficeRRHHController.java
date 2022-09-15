@@ -5,6 +5,7 @@ import com.tingeso.tingeso.entities.PlanillaSueldos;
 import com.tingeso.tingeso.services.EmployeeService;
 import com.tingeso.tingeso.services.OfficeRRHH;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class OfficeRRHHController {
   EmployeeService employeeService;
 
   @GetMapping("/calcular-sueldos")
-  public String getSalaries(Model model) {
+  public String getSalaries(Model model) throws ParseException {
     List <EmployeeEntity> employees  = employeeService.getEmployees();
 
     List <PlanillaSueldos> sueldos = new ArrayList<PlanillaSueldos>();
@@ -35,7 +36,7 @@ public class OfficeRRHHController {
       employees.get(i).getName(),
       employees.get(i).getLast_name(),
       employees.get(i).getCategory(),
-      employees.get(i).getService_years(),
+      officeRRHH.get_service_years(employees.get(i).getRut()),
       officeRRHH.get_sueldo_base(employees.get(i).getRut()),
       officeRRHH.calcular_bonificaciones(employees.get(i).getRut()),
       officeRRHH.calcular_sueldo_horas_extra(employees.get(i).getRut()),

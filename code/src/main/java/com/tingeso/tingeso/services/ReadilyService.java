@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -28,7 +29,6 @@ public class ReadilyService {
 
   static String ENTRY_TIME = "08:00"; // Todos los empleados deben llegar a las 8:00
   static String EXIT_TIME = "18:00"; // Todos los empleados deben salir a las 18:00 (Pueden haber horas extras)
-  String minutes_per_day = "600"; // Todos los empleados deben trabajar 600 minutos (10 horas)
   List<String> laboral_days = Arrays.asList("lun", "mar", "mié", "jue", "vie"); // 5 laboral days
   static DateFormat dateFormaty = new SimpleDateFormat("yyyy/MM/dd");
   static DateFormat dayFormat = new SimpleDateFormat("EEE");
@@ -51,17 +51,16 @@ public class ReadilyService {
           ruts_map.clear(); // the hashmap is cleared every day
         }
         if (!ruts_map.containsKey(rut)) {
-          ArrayList<String> temp = new ArrayList<>(); // tempora array to save entry and quit times of a employee by rut
+          ArrayList<String> temp = new ArrayList<>(); // temporal array to save entry and quit times of a employee by rut
           temp.add(hora); // add entry time
           ruts_map.put(rut, temp); // hashmap rut and entry time
         } else {
           ruts_map.get(rut).add(hora); // hashmap exit time
-          System.out.println("DIA: " + date + " RUT: "+"[" + rut +"]"+ employeeService.getEmployeeByRut(rut) +
+          System.out.println("DIA: " + date + " RUT: "+"[" + rut +"] "+ employeeService.getEmployeeByRut(rut) +
           " ENTRADA: " + ruts_map.get(rut).get(0) +" SALIDA: " + ruts_map.get(rut).get(1)
-          +" TARDANZA: "+ getLateMinutes(ENTRY_TIME,ruts_map.get(rut).get(0)) +
-          " TIEMPO: " + getWorkedHours(ruts_map.get(rut).get(0),ruts_map.get(rut).get(1))
-          + "HORAS EXTRA: " + extraHours(EXIT_TIME,ruts_map.get(rut).get(1)));
-          workedDaysService.insert_worked_day(rut,date,ruts_map.get(rut).get(0), ruts_map.get(rut).get(1),  getWorkedHours(ruts_map.get(rut).get(0),ruts_map.get(rut).get(1)), extraHours(EXIT_TIME,ruts_map.get(rut).get(1)), getLateMinutes(ENTRY_TIME,ruts_map.get(rut).get(0)));
+          +" TARDANZA: "+ getLateMinutes(ruts_map.get(rut).get(0))
+          + " HORAS EXTRA: " + extraHours(ruts_map.get(rut).get(1)));
+          workedDaysService.insert_worked_day(rut,date,extraHours(ruts_map.get(rut).get(1)),getLateMinutes(ruts_map.get(rut).get(0)));
         }
       }
     }
@@ -69,10 +68,10 @@ public class ReadilyService {
   }
   // I: 2 Strings con formato HH:mm
   // O: Long con la cantidad de minutos trabajados
-  public static Integer getLateMinutes(String start_t, String exit_t) throws ParseException {
-    Date entrada = hours_mins.parse(start_t);
-    Date salida = hours_mins.parse(exit_t);
-    long horas_trabajadas = salida.getTime() - entrada.getTime();
+  public static Integer getLateMinutes( String exit_t) throws ParseException {
+    Date entrada_normal = hours_mins.parse(ENTRY_TIME);
+    Date entrada_empleado = hours_mins.parse(exit_t);
+    long horas_trabajadas = entrada_empleado.getTime() - entrada_normal.getTime();
     if(TimeUnit.MILLISECONDS.toMinutes(horas_trabajadas) < 0){ // Si entro antes se toma como hora de entrada (8:00 am)
       return 0;
     }
@@ -80,27 +79,24 @@ public class ReadilyService {
   }
   // I: 2 Strings con formato HH:mm
   // O: Long con la cantidad de minutos trabajados
-  public static Integer getWorkedHours(String start_t, String end_t) throws ParseException {
-    Date entrada, salida;
-    entrada = hours_format.parse(start_t);
-    salida = hours_format.parse(end_t);
-    if(getLateMinutes(ENTRY_TIME,start_t) == 0){ // Si entra antes se toman las horas como si entrara a las (8:00 am)
-      entrada = hours_format.parse(ENTRY_TIME);
-    }
-    if(getLateMinutes(end_t,EXIT_TIME) >= 0 && getLateMinutes(end_t,EXIT_TIME) <= 15){ // si sale de las 17:45 para adelante se permite como salida a las 18:00
-      salida = hours_format.parse(EXIT_TIME);
-    }
-    return (int) TimeUnit.MILLISECONDS.toHours(salida.getTime() - entrada.getTime());
-  }
-  // I: 2 Strings con formato HH:mm
-  // O: Long con la cantidad de minutos trabajados
-  public static Integer extraHours(String start_t, String exit_t)throws ParseException {
-    Date entrada = hours_mins.parse(start_t);
+  public static Integer extraHours(String exit_t)throws ParseException {
+    Date salida_normal = hours_mins.parse(EXIT_TIME);
     Date salida = hours_mins.parse(exit_t);
-    long horas_trabajadas = salida.getTime() - entrada.getTime();
-    if(horas_trabajadas <= 0){
+    long horas_extra = salida.getTime() - salida_normal.getTime();
+    if(horas_extra <= 0){
       return 0;
     }
-    return (int) TimeUnit.MILLISECONDS.toMinutes(horas_trabajadas);
+    return (int) TimeUnit.MILLISECONDS.toHours(horas_extra);
   }
+  public void testIterator(){
+		Calendar c = Calendar.getInstance();
+		int year = 2016;
+		for (int i=0;i<12;i++){
+			c.set(year, i, 1);
+			int lastDay = c.getActualMaximum(Calendar.DAY_OF_MONTH);
+			for (int x=1;x<=lastDay;x++){
+				System.out.println(year+"-"+(i+1)+"-"+x);
+			}
+		}
+	}
 }

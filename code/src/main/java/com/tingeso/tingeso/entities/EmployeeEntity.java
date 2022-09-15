@@ -25,5 +25,6 @@ public class EmployeeEntity {
   @Getter @Setter private String name;
   @Getter @Setter private String last_name;
   @Getter @Setter private String category;
-  @Getter @Setter private Integer service_years;
+  @Getter @Setter private String birth_date;
+  @Getter @Setter private String entry_date;
 }
