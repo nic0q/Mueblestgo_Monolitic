@@ -6,10 +6,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "extra_hours")
 @Data
@@ -28,8 +33,8 @@ public class ExtraHoursEntity {
   @Setter
   private String rut_employee;
 
-  public ExtraHoursEntity(Integer extra_hours2, String rut_employee2) {
-    this.extra_hours = extra_hours2;
-    this.rut_employee = rut_employee2;
+  public ExtraHoursEntity(Integer extra_hours, String rut_employee) {
+    this.extra_hours = extra_hours;
+    this.rut_employee = rut_employee;
   }
 }

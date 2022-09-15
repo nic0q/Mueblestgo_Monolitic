@@ -25,6 +25,12 @@ public class WorkedDaysService {
       .filter(dia -> dia.getRut_employee().equals(rut_empleado) && dia.getLate_minutes() <= 70) // considera 70mins como tolerancia
       .collect(Collectors.toList());
   }
+  public Date obtener_fecha_inicio(){
+    return workedDaysRepository.getDate();
+  }
+  public WorkedDaysEntity get_dia_trabajado(String rut_empleado, String date) throws ParseException {
+    return workedDaysRepository.getWorkedDay(rut_empleado, convertir_fecha(date));
+  }
   public Date convertir_fecha(String fecha) throws ParseException{
     SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy/mm/dd");
     java.util.Date date = sdf1.parse(fecha);

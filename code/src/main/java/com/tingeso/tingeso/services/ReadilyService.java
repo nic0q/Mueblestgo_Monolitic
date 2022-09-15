@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -88,15 +87,5 @@ public class ReadilyService {
     }
     return (int) TimeUnit.MILLISECONDS.toHours(horas_extra);
   }
-  public void testIterator(){
-		Calendar c = Calendar.getInstance();
-		int year = 2016;
-		for (int i=0;i<12;i++){
-			c.set(year, i, 1);
-			int lastDay = c.getActualMaximum(Calendar.DAY_OF_MONTH);
-			for (int x=1;x<=lastDay;x++){
-				System.out.println(year+"-"+(i+1)+"-"+x);
-			}
-		}
-	}
+
 }
