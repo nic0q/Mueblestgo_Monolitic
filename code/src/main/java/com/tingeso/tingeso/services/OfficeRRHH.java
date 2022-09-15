@@ -5,13 +5,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.tingeso.tingeso.entities.WorkedDaysEntity;
 
 @Service
 public class OfficeRRHH {
@@ -27,6 +25,8 @@ public class OfficeRRHH {
   static DateFormat dateFormatSQL = new SimpleDateFormat("yyyy-MM-dd");
   static DateFormat dayFormat = new SimpleDateFormat("EEE");
 
+  @Autowired
+  ExtraHoursService extraHoursService;
   @Autowired
   private EmployeeService employeeService;
   @Autowired
@@ -45,19 +45,29 @@ public class OfficeRRHH {
     }
     return sueldo;
   }
-  public double calcular_sueldo_horas_extra(String rut_empleado){
-    List <WorkedDaysEntity> dias_trabajados = workedDaysService.obtener_dias_trabajados(rut_empleado);
-    double sueldo_horas = dias_trabajados.stream().mapToInt(WorkedDaysEntity::getExtra_hours).sum();
+  public double calcular_sueldo_horas_extra(String rut_empleado) throws ParseException{
+    int n_horas_extra = 0;
+    if(extraHoursService.get_extra_hours_efectivas(rut_empleado) != null){
+      for(int i = 0; i < extraHoursService.get_extra_hours_efectivas(rut_empleado).size(); i++){
+        n_horas_extra += extraHoursService.get_extra_hours_efectivas(rut_empleado).get(i).getN_hours();
+      }
+    }
+    return valor_horas_extra(rut_empleado, n_horas_extra);
+  }
+  public double valor_horas_extra(String rut_empleado, Integer n_horas_extra){
     if(employeeService.getEmployeeByRut(rut_empleado).getCategory().equals("A")){
-      sueldo_horas = sueldo_horas * HORA_EXTRA_A;
+      return n_horas_extra * HORA_EXTRA_A;
     }
     else if(employeeService.getEmployeeByRut(rut_empleado).getCategory().equals("B")){
-      sueldo_horas = sueldo_horas * HORA_EXTRA_B;
+      return n_horas_extra * HORA_EXTRA_B;
     }
     else if(employeeService.getEmployeeByRut(rut_empleado).getCategory().equals("C")){
-      sueldo_horas = sueldo_horas * HORA_EXTRA_C;
+      return n_horas_extra * HORA_EXTRA_C;
     }
-    return sueldo_horas;
+    return n_horas_extra;
+  }
+  public Integer get_service_years(String rut_empleado) throws ParseException{
+    return (int) Math.floor(TimeUnit.MILLISECONDS.toDays((dateFormatSQL.parse(java.time.LocalDate.now().toString()).getTime() - dateFormaty.parse(employeeService.getEmployeeByRut(rut_empleado).getEntry_date()).getTime()))*0.00273785);
   }
   public double calcular_bonificaciones(String rut_empleado) throws ParseException{
     double sueldo_base = get_sueldo_base(rut_empleado);
@@ -79,8 +89,29 @@ public class OfficeRRHH {
     }
     return 0;
   }
-  public Integer get_service_years(String rut_empleado) throws ParseException{
-    return (int) Math.floor(TimeUnit.MILLISECONDS.toDays((dateFormatSQL.parse(java.time.LocalDate.now().toString()).getTime() - dateFormaty.parse(employeeService.getEmployeeByRut(rut_empleado).getEntry_date()).getTime()))*0.00273785);
+  public void get_inasistencias(String rut_empleado) throws ParseException{
+    Date date = workedDaysService.obtener_fecha_inicio(); // obtengo la fecha de inicio para recorrer el mes
+    Calendar c = Calendar.getInstance(); // creo el calendario
+    c.setTime(date); // seteo a la fecha actual
+    int lastDay = c.getActualMaximum(Calendar.DAY_OF_MONTH); // dia maximo del mes
+    for (int day = 1; day <= lastDay; day++) {
+      c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), day);
+      Date day_name = c.getTime();
+      String str_day_name = dayFormat.format(day_name);
+      if(str_day_name.equals("sáb") || str_day_name.equals("dom")) {
+        continue;
+      };
+      if(workedDaysService.get_dia_trabajado(rut_empleado, dateFormaty.format(c.getTime())) == null){
+        // System.out.println(rut_empleado + " NO ASISTIO EL DIA: " + dateFormaty.format(c.getTime()));
+        // Revisar si tiene justificativo, sino apicar descuento
+      }
+      else{
+        // System.out.println(rut_empleado + " ASISTIO EL DIA: " + dateFormaty.format(c.getTime()));
+        // Ver si llego tarde
+        // SI llego tarde y no tiene justificativo aplicar descuento
+        // Si no, no hacer nada
+      }
+    }
   }
   public double calcular_descuentos(String rut_empleado){
     return 0;
@@ -99,29 +130,5 @@ public class OfficeRRHH {
   }
   public double calcular_sueldo_final(double sueldo_bruto){
     return sueldo_bruto - calcular_cotizacion_salud(sueldo_bruto) - calcular_cotizacion_previsional(sueldo_bruto);
-  }
-  public void get_inasistencias(String rut_empleado) throws ParseException{
-    Date date = workedDaysService.obtener_fecha_inicio(); // obtengo la fecha de inicio para recorrer el mes
-    Calendar c = Calendar.getInstance(); // creo el calendario
-    c.setTime(date); // seteo a la fecha actual
-    int lastDay = c.getActualMaximum(Calendar.DAY_OF_MONTH); // dia maximo del mes
-    for (int day = 1; day <= lastDay; day++) {
-      c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), day);
-      Date day_name = c.getTime();
-      String str_day_name = dayFormat.format(day_name);
-      if(str_day_name.equals("sáb") || str_day_name.equals("dom")) {
-        continue;
-      };
-      if(workedDaysService.get_dia_trabajado(rut_empleado, dateFormaty.format(c.getTime())) == null){
-        System.out.println(rut_empleado + " NO ASISTIO EL DIA: " + dateFormaty.format(c.getTime()));
-        // Revisar si tiene justificativo, sino apicar descuento
-      }
-      else{
-        System.out.println(rut_empleado + " ASISTIO EL DIA: " + dateFormaty.format(c.getTime()));
-        // Ver si llego tarde
-        // SI llego tarde y no tiene justificativo aplicar descuento
-        // Si no, no hacer nada
-      }
-    }
   }
 }

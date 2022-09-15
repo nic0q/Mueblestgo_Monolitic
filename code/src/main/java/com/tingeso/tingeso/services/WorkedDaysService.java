@@ -32,12 +32,13 @@ public class WorkedDaysService {
     return workedDaysRepository.getWorkedDay(rut_empleado, convertir_fecha(date));
   }
   public Date convertir_fecha(String fecha) throws ParseException{
-    SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy/mm/dd");
+    SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy/MM/dd");
     java.util.Date date = sdf1.parse(fecha);
     java.sql.Date sqlStartDate = new java.sql.Date(date.getTime()); 
     return sqlStartDate;
   }
   public void insert_worked_day(String rut_empleado, String fecha, Integer horas_extra, Integer minutos_tarde) throws ParseException{
+    System.out.println(convertir_fecha(fecha));
     WorkedDaysEntity workedDaysEntity = new WorkedDaysEntity(rut_empleado,convertir_fecha(fecha),horas_extra, minutos_tarde);
     workedDaysRepository.save(workedDaysEntity);
   }

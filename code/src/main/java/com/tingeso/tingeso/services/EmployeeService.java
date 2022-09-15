@@ -19,14 +19,9 @@ public class EmployeeService {
     return employeeRepository.findByRut(rut);
   }
   public boolean exists_employee(String rut){
-    try{
-      if(employeeRepository.findByRut(rut).equals(null)){
-        return false;
-      }
-      return true;
-    }
-    catch(Exception e){
+    if(employeeRepository.findByRut(rut) == null){
       return false;
     }
+    return true;
   }
 }
