@@ -2,28 +2,28 @@
 <html xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="ISO-8859-1">
-    <title>Ingreso Justificativos</title>
+    <title>Justificativo</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
   </head>
   <body>
     <div class="main-block">
-        <h1>Ingreso Horas Extra</h1>
+        <h1>Ingreso Justificativos</h1>
         <hr>
-        <form th:action="@{/extra-hours-form}" method="post" th:object="${extra_form}" class="form">
+        <form th:action="@{/justificative-form}" method="post" th:object="${justificative_form}" class="form">
             <label>RUT Empleado</label>
             <input type="text" th:field="*{rut_employee}"/>
             <div class="bar error" th:if="${#fields.hasErrors('rut_employee')}" th:errors="*{rut_employee}"></div>
-            <br>
-            <label>Horas Extra</label>
-            <input type="text" th:field="*{extra_hours}"/>
-            <div class="bar error" th:if="${#fields.hasErrors('extra_hours')}" th:errors="*{extra_hours}"></div>
-            <br><br>
             <div  class="bar error" th:if="${wrong_user}" th:text="${wrong_user}"></div>
-            <div class="bar success" th:if="${success}" th:text="${success}"></div>
-            <br><br>
+            <br>
+            <br>
+            <label>Fecha</label>
+            <input type="date" th:field="*{date}"/>
+            <div class="bar error" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"><br></div>
+            <br>
+            <div class="bar success" th:if="${success}" th:text="${success}"><br><br></div>
             <button>Ingresar</button>
-            <a href="/"><button href="/" type="button" class="btn btn-primary"> Volver </button></
+            <a href="/"><button href="/" type="button" class="btn btn-primary"> Volver </button></a>
         </form>
     </div>
   </body>

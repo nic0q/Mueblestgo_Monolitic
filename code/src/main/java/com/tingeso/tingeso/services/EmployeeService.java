@@ -18,4 +18,15 @@ public class EmployeeService {
   public EmployeeEntity getEmployeeByRut(String rut) {
     return employeeRepository.findByRut(rut);
   }
+  public boolean exists_employee(String rut){
+    try{
+      if(employeeRepository.findByRut(rut).equals(null)){
+        return false;
+      }
+      return true;
+    }
+    catch(Exception e){
+      return false;
+    }
+  }
 }

@@ -1,7 +1,6 @@
 package com.tingeso.tingeso.services;
 
 import com.tingeso.tingeso.entities.ExtraHoursEntity;
-import com.tingeso.tingeso.repostories.EmployeeRepository;
 import com.tingeso.tingeso.repostories.ExtraHoursRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,20 +12,20 @@ public class ExtraHoursService {
   ExtraHoursRepository extraHoursRepository;
 
   @Autowired
-  EmployeeRepository employeeRepository;
+  EmployeeService employeeService;
 
-  public boolean exists_employee(ExtraHoursEntity extra_form) {
-    if (employeeRepository.findByRut(extra_form.getRut_employee()) != null) {
-      return true;
-    }
-    return false;
-  }
   public boolean save_extra_hours(ExtraHoursEntity extra_form) {
     System.out.print(extra_form);
-    if (exists_employee(extra_form)) {
-      ExtraHoursEntity entry = new ExtraHoursEntity(extra_form.getExtra_hours(), extra_form.getRut_employee());
+    if (employeeService.exists_employee(extra_form.getRut_employee())) {
+      ExtraHoursEntity entry = new ExtraHoursEntity(
+        extra_form.getDate(),
+        extra_form.getRut_employee(),
+        extra_form.getN_hours()
+      );
       extraHoursRepository.save(entry);
-      System.out.println("Horas extra guardadas correctamente " + entry.toString());
+      System.out.println(
+        "Horas extra guardadas correctamente " + entry.toString()
+      );
       return true;
     }
     System.out.println("El empleado no existe");
