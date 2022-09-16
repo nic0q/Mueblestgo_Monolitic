@@ -16,6 +16,10 @@ public class OfficeRRHH {
   static double SUELDO_A = 1700000;
   static double SUELDO_B = 1200000;
   static double SUELDO_C = 800000;
+  static double DESCUENTO_TARDANZA_10min = 0.01;
+  static double DESCUENTO_TARDANZA_25min = 0.03;
+  static double DESCUENTO_TARDANZA_45min = 0.06;
+  static double DESCUENTO_INASISTENCIA = 0.15;
   static double HORA_EXTRA_A = 25000;
   static double HORA_EXTRA_B = 20000;
   static double HORA_EXTRA_C = 10000;
@@ -31,6 +35,8 @@ public class OfficeRRHH {
   private EmployeeService employeeService;
   @Autowired
   private WorkedDaysService workedDaysService;
+  @Autowired
+  private JustificativeService justificativeService;
 
   public double get_sueldo_base(String rut_empleado) throws ParseException{
     double sueldo = 0;
@@ -43,7 +49,7 @@ public class OfficeRRHH {
     else if(employeeService.getEmployeeByRut(rut_empleado).getCategory().equals("C")){
       sueldo = SUELDO_C;
     }
-    return sueldo;
+    return (Math.round(sueldo*100.0)/100.0);
   }
   public double calcular_sueldo_horas_extra(String rut_empleado) throws ParseException{
     int n_horas_extra = 0;
@@ -73,23 +79,25 @@ public class OfficeRRHH {
     double sueldo_base = get_sueldo_base(rut_empleado);
     Integer service_years = get_service_years(rut_empleado);
     if(service_years >= 25){
-      return sueldo_base * 0.17;
+      return (Math.round((sueldo_base * 0.17)*100.0)/100.0);
     }
     else if( service_years >= 20){
-      return sueldo_base * 0.14;
+      return (Math.round((sueldo_base * 0.14)*100.0)/100.0);
     }
     else if( service_years >= 15){
-      return sueldo_base * 0.11;
+      return (Math.round((sueldo_base * 0.11)*100.0)/100.0);
     }
     else if( service_years >= 10){
-      return sueldo_base * 0.08;
+      return (Math.round((sueldo_base * 0.08)*100.0)/100.0);
     }
     else if( service_years >= 5){
-      return sueldo_base * 0.05;
+      return (Math.round((sueldo_base * 0.05)*100.0)/100.0);
     }
     return 0;
   }
-  public void get_inasistencias(String rut_empleado) throws ParseException{
+  public double calcular_descuentos(String rut_empleado) throws ParseException{
+    double sueldo_base = get_sueldo_base(rut_empleado);
+    double descuentos = 0;
     Date date = workedDaysService.obtener_fecha_inicio(); // obtengo la fecha de inicio para recorrer el mes
     Calendar c = Calendar.getInstance(); // creo el calendario
     c.setTime(date); // seteo a la fecha actual
@@ -101,32 +109,41 @@ public class OfficeRRHH {
       if(str_day_name.equals("sáb") || str_day_name.equals("dom")) {
         continue;
       };
-      if(workedDaysService.get_dia_trabajado(rut_empleado, dateFormaty.format(c.getTime())) == null){
-        // System.out.println(rut_empleado + " NO ASISTIO EL DIA: " + dateFormaty.format(c.getTime()));
-        // Revisar si tiene justificativo, sino apicar descuento
+      // NO FUE A TRABAJAR | LLEGO TARDE
+      if(workedDaysService.get_dia_trabajado(rut_empleado, dateFormaty.format(c.getTime())) == null || 
+          workedDaysService.get_dia_trabajado(rut_empleado, dateFormaty.format(c.getTime())).getLate_minutes() > 70){
+        if(justificativeService.searchJustificative(rut_empleado, dateFormaty.format(c.getTime())) == null){ // no tiene justificativo
+          descuentos += sueldo_base * DESCUENTO_INASISTENCIA;
+        }
       }
-      else{
-        // System.out.println(rut_empleado + " ASISTIO EL DIA: " + dateFormaty.format(c.getTime()));
-        // Ver si llego tarde
-        // SI llego tarde y no tiene justificativo aplicar descuento
-        // Si no, no hacer nada
+      else{ // DESCONTAR TARDANZA
+        descuentos += sueldo_base * descuentos_tardanza(workedDaysService.get_dia_trabajado(rut_empleado, dateFormaty.format(c.getTime())).getLate_minutes());
       }
     }
+    return descuentos;
   }
-  public double calcular_descuentos(String rut_empleado){
+  public double descuentos_tardanza(Integer minutos_tarde){
+    if(minutos_tarde > 10){
+      return DESCUENTO_TARDANZA_10min;
+    }
+    else if(minutos_tarde > 25){
+      return DESCUENTO_TARDANZA_25min;
+    }
+    else if(minutos_tarde > 45){
+      return DESCUENTO_TARDANZA_45min;
+    }
     return 0;
   }
   public double calcular_sueldo_bruto(String rut_empleado) throws ParseException{
     double sueldo = 0;
-    get_inasistencias(rut_empleado);
     sueldo = (get_sueldo_base(rut_empleado) + calcular_bonificaciones(rut_empleado) + calcular_sueldo_horas_extra(rut_empleado) - calcular_descuentos(rut_empleado));
-    return sueldo;
+    return (Math.round(sueldo*100.0)/100.0);
   }
   public double calcular_cotizacion_salud(double sueldo_bruto){
-    return sueldo_bruto * COTIZACION_SALUD;
+    return (Math.round((sueldo_bruto * COTIZACION_SALUD)*100.0)/100.0); 
   }
   public double calcular_cotizacion_previsional(double sueldo_bruto){
-    return sueldo_bruto * COTIZACION_PREVISIONAL;
+    return  (Math.round((sueldo_bruto * COTIZACION_PREVISIONAL)*100.0)/100.0);
   }
   public double calcular_sueldo_final(double sueldo_bruto){
     return sueldo_bruto - calcular_cotizacion_salud(sueldo_bruto) - calcular_cotizacion_previsional(sueldo_bruto);
