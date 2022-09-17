@@ -35,7 +35,7 @@ public class ReadilyService {
   static DateFormat hours_format = new SimpleDateFormat("hh");
 
   public boolean readFile() throws FileNotFoundException, ParseException {
-    InputStream ins = new FileInputStream("cargas/data.txt");
+    InputStream ins = new FileInputStream("cargas/JUNIO_2Empleados.txt");
     ArrayList<String> dias = new ArrayList<String>();
     Map<String, ArrayList<String>> ruts_map = new HashMap<String, ArrayList<String>>();
     try (Scanner obj = new Scanner(ins)) {

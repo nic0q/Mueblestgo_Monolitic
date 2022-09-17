@@ -21,29 +21,25 @@ CREATE TABlE IF NOT EXISTS worked_days (
     FOREIGN KEY(rut_employee) REFERENCES employee(rut),
     PRIMARY KEY(id)
 );
-DROP TABLE worked_days;
 CREATE TABLE IF NOT EXISTS extra_hours(
 	id int auto_increment,
-    `extra_hours` int,
+    `date` date,
+    n_hours int,
 	rut_employee char(10),
     FOREIGN KEY(rut_employee) REFERENCES employee(rut),
     PRIMARY KEY(id)
 );
-DROP TABLE extra_hours;
 CREATE TABLE IF NOT EXISTS justificative(
 	id int auto_increment,
-    `date` varchar(15),
+    `date` date,
 	rut_employee char(10),
     FOREIGN KEY(rut_employee) REFERENCES employee(rut),
     PRIMARY KEY(id)
 );
-DROP TABLE justificative;
 SELECT * FROM employee;
 SELECT * FROM justificative;
 SELECT * FROM extra_hours;
 SELECT * FROM worked_days;
-
-SELECT * FROM worked_days WHERE `date` > "2022-01-16";
 
 INSERT INTO employee(rut, `name`,last_name,category,birth_date,entry_date) VALUES("28371904-9","nico","las","A","2000/03/22","2020/03/22");
 INSERT INTO employee(rut, `name`,last_name,category,birth_date,entry_date) VALUES("27391503-6","WEON","SOYYO","A","2000/03/22","2015/03/22");
@@ -54,4 +50,23 @@ INSERT INTO employee(rut, `name`,last_name,category,birth_date,entry_date) VALUE
 DELETE FROM employee WHERE id > 0;
 DELETE FROM worked_days WHERE id > 0;
 DELETE FROM extra_hours WHERE id > 0;
+DELETE FROM justificative WHERE id > 0;
+INSERT INTO `tingeso`.`worked_days`
+(`rut_employee`,`date`,`extra_hours`,`late_minutes`)VALUES("27391503-6","2022-05-20",1,	0);
 
+SELECT `date` FROM worked_days LIMIT 1;
+
+SELECT * FROM extra_hours;
+SELECT * FROM worked_days;	
+
+SELECT eh.id, eh.rut_employee, eh.`date`,eh.n_hours FROM extra_hours AS eh
+INNER JOIN worked_days AS wd ON (wd.rut_employee = eh.rut_employee AND wd.`date` = eh.`date`)
+WHERE wd.extra_hours = eh.n_hours AND eh.rut_employee = "27391503-6" AND wd.rut_employee = "27391503-6";
+
+
+-- Query para obtener meses que han sido trabajados
+SELECT * FROM worked_days;
+SELECT * FROM worked_days WHERE rut_employee = "27391503-6" AND `date` = "2022-01-18";
+SELECT EXTRACT(MONTH FROM wd.`date`)
+FROM worked_days AS wd
+GROUP BY EXTRACT(YEAR FROM wd.`date`),EXTRACT(MONTH FROM wd.`date`);

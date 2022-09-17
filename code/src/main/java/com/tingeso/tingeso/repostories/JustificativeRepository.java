@@ -15,6 +15,4 @@ import com.tingeso.tingeso.entities.JustificativeEntity;
 public interface JustificativeRepository extends JpaRepository<JustificativeEntity, Integer> {
   @Query(value="SELECT * FROM justificative WHERE rut_employee = :rut AND `date` = :datee", nativeQuery=true)
   JustificativeEntity getJustificative(@Param("rut")String rut,@Param("datee") Date date);
-  
-  
 }
