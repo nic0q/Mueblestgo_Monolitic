@@ -45,4 +45,7 @@ public class JustificativeService {
   public JustificativeEntity searchJustificative(String rut_employee, String date) throws ParseException {
     return justificativeRepository.getJustificative(rut_employee, convertir_fecha(date));
   }
+  public void deleteAll(){
+    justificativeRepository.deleteAll();
+  }
 }

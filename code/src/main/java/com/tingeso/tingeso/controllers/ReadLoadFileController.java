@@ -1,7 +1,12 @@
 package com.tingeso.tingeso.controllers;
 
+import com.tingeso.tingeso.services.EmployeeService;
+import com.tingeso.tingeso.services.ExtraHoursService;
+import com.tingeso.tingeso.services.JustificativeService;
 import com.tingeso.tingeso.services.ReadilyService;
 import com.tingeso.tingeso.services.UploadService;
+import com.tingeso.tingeso.services.WorkedDaysService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,19 +26,27 @@ public class ReadLoadFileController {
   private UploadService upload;
   @Autowired
   private ReadilyService readfile;
-  
+  @Autowired
+  private ExtraHoursService extraHoursService;
+  @Autowired
+  private WorkedDaysService workedDaysService;
+  @Autowired
+  private JustificativeService justificativeService;
+
   @GetMapping("/load-txt")
   public String load_txt() {
     return "loadfile";
   }
   @PostMapping("/save-txt")
-  public String save_txt( @RequestParam("archivos") MultipartFile file, RedirectAttributes ms) {
+  public String save_txt( @RequestParam("archivos") MultipartFile file, RedirectAttributes ms) throws FileNotFoundException, ParseException {
     upload.save(file);
-    ms.addFlashAttribute("mensaje", "Archivo guardado correctamente!!");
-    return "redirect:/load-txt";
-  }
-  @GetMapping("/read-data")
-  public String readData() throws FileNotFoundException, ParseException {
+    if(!readfile.nombre_correcto(file.getOriginalFilename())){
+      ms.addFlashAttribute("mensaje", "El archivo no pudo ser leido");
+      return "redirect:/load-txt";
+    }
+    justificativeService.deleteAll();
+    extraHoursService.deleteAll();
+    workedDaysService.deleteAll();
     readfile.readFile();
     return "redirect:/";
   }

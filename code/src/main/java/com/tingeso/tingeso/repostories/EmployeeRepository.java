@@ -7,8 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @EnableJpaRepositories
-public interface EmployeeRepository
-  extends JpaRepository<EmployeeEntity, Integer> {
+public interface EmployeeRepository extends JpaRepository<EmployeeEntity, String> {
   public EmployeeEntity findByRut(String rut);
-  // public EmployeeEntity findOne(Integer id);
 }

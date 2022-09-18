@@ -48,4 +48,7 @@ public class WorkedDaysService {
       .filter(dia -> dia.getLate_minutes() > 0)
       .collect(Collectors.toList());
   }
+  public void deleteAll(){
+    workedDaysRepository.deleteAll();
+  }
 }

@@ -33,9 +33,15 @@ public class ReadilyService {
   static DateFormat dayFormat = new SimpleDateFormat("EEE");
   static DateFormat hours_mins = new SimpleDateFormat("hh:mm");
   static DateFormat hours_format = new SimpleDateFormat("hh");
+  static String NOMBRE_TXT = "DATA.txt";
 
+  public boolean nombre_correcto(String nombre) {
+    return nombre.equals(NOMBRE_TXT);
+  }
   public boolean readFile() throws FileNotFoundException, ParseException {
-    InputStream ins = new FileInputStream("cargas/JUNIO_2Empleados.txt");
+    try {
+    
+    InputStream ins = new FileInputStream("cargas/"+NOMBRE_TXT);
     ArrayList<String> dias = new ArrayList<String>();
     Map<String, ArrayList<String>> ruts_map = new HashMap<String, ArrayList<String>>();
     try (Scanner obj = new Scanner(ins)) {
@@ -64,6 +70,10 @@ public class ReadilyService {
       }
     }
     return true;
+  } catch (FileNotFoundException e) {
+    return false;
+  }
+   
   }
   // I: 2 Strings con formato HH:mm
   // O: Long con la cantidad de minutos trabajados

@@ -29,7 +29,7 @@ public class ExtraHoursService {
   static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy/mm/dd");
   public Date convertir_fecha(String fecha) throws ParseException{
     
-    java.util.Date date = sdf1.parse(fecha);
+    java.util.Date date = dateFormatSQL.parse(fecha);
     java.sql.Date sqlStartDate = new java.sql.Date(date.getTime()); 
     return sqlStartDate;
   }
@@ -54,7 +54,7 @@ public class ExtraHoursService {
   public List<ExtraHoursEntity> get_extra_hours_efectivas(String rut_employee) throws ParseException {
     List<ExtraHoursEntity>horas = extraHoursRepository.getHorasExtraEfectivas(rut_employee);
     // for(int i = 0; i < horas.size(); i++){
-    //   WorkedDaysEntity dia = workedDaysService.get_dia_trabajado(rut_employee, horas.get(i).getDate().toString());
+    //   WorkedDaysEntity dia = workedDaysService.get_dia_trabajado(rut_employee,sdf1.format(horas.get(i).getDate()).toString());
     //   if(dia.getLate_minutes() > 70 && justificativeService.searchJustificative(rut_employee,sdf1.parse( dia.getDate().toString()).toString()) == null){
     //     horas.remove(i);
     //   }
@@ -63,5 +63,8 @@ public class ExtraHoursService {
   }
   public ExtraHoursEntity get_extra_hours(String rut_employee, Date date) throws ParseException {
     return extraHoursRepository.getExtraHours(rut_employee, date);
+  }
+  public void deleteAll(){
+    extraHoursRepository.deleteAll();
   }
 }
