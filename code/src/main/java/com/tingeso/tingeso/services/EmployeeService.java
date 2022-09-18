@@ -13,17 +13,13 @@ public class EmployeeService {
   private EmployeeRepository employeeRepository;
 
   public List<EmployeeEntity> getEmployees() {
-    return (List<EmployeeEntity>) employeeRepository.findAll();
+    return employeeRepository.findAll();
   }
   public EmployeeEntity getEmployeeByRut(String rut) {
     return employeeRepository.findByRut(rut);
   }
   public boolean exists_employee(String rut){
-    if(employeeRepository.findByRut(rut) == null){
-      
-      return false;
-    }
-    return true;
+    return employeeRepository.findByRut(rut) != null;
   }
   public void deleteAll(){
     employeeRepository.deleteAll();

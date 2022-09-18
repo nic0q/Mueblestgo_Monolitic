@@ -10,7 +10,7 @@
     <div class="main-block">
         <h1>Ingreso Justificativos</h1>
         <hr>
-        <form th:action="@{/justificative-form}" method="post" th:object="${justificative_form}" class="form">
+        <form th:action="@{/justificative-form}" method="post" th:object="${justificativeForm}" class="form">
             <label>RUT Empleado</label>
             <input type="text" th:field="*{rut_employee}"/>
             <div class="bar error" th:if="${#fields.hasErrors('rut_employee')}" th:errors="*{rut_employee}"></div>

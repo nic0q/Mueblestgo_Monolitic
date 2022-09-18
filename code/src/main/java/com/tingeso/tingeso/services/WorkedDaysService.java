@@ -7,7 +7,6 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,12 +17,10 @@ public class WorkedDaysService {
   WorkedDaysRepository workedDaysRepository;
   
   public List<WorkedDaysEntity> get_dias_trabajados() {
-    return (List<WorkedDaysEntity>) workedDaysRepository.findAll();
+    return workedDaysRepository.findAll();
   }
   public List<WorkedDaysEntity> obtener_dias_trabajados(String rut_empleado){
-    return get_dias_trabajados().stream()
-      .filter(dia -> dia.getRut_employee().equals(rut_empleado) && dia.getLate_minutes() <= 70) // considera 70mins como tolerancia
-      .collect(Collectors.toList());
+    return get_dias_trabajados().stream().filter(dia -> dia.getRut_employee().equals(rut_empleado) && dia.getLate_minutes() <= 70).toList();
   }
   public Date obtener_fecha_inicio(){
     return workedDaysRepository.getDate();
@@ -38,15 +35,8 @@ public class WorkedDaysService {
     return sqlStartDate;
   }
   public void insert_worked_day(String rut_empleado, String fecha, Integer horas_extra, Integer minutos_tarde) throws ParseException{
-    System.out.println(convertir_fecha(fecha));
     WorkedDaysEntity workedDaysEntity = new WorkedDaysEntity(rut_empleado,convertir_fecha(fecha),horas_extra, minutos_tarde);
     workedDaysRepository.save(workedDaysEntity);
-  }
-  public void get_late_days(String rut_empleado){
-    List<WorkedDaysEntity> dias_trabajados = obtener_dias_trabajados(rut_empleado);
-    dias_trabajados.stream()
-      .filter(dia -> dia.getLate_minutes() > 0)
-      .collect(Collectors.toList());
   }
   public void deleteAll(){
     workedDaysRepository.deleteAll();

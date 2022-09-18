@@ -1,6 +1,5 @@
 package com.tingeso.tingeso.controllers;
-
-import com.tingeso.tingeso.services.EmployeeService;
+  
 import com.tingeso.tingeso.services.ExtraHoursService;
 import com.tingeso.tingeso.services.JustificativeService;
 import com.tingeso.tingeso.services.ReadilyService;
@@ -34,11 +33,11 @@ public class ReadLoadFileController {
   private JustificativeService justificativeService;
 
   @GetMapping("/load-txt")
-  public String load_txt() {
+  public String loadTxt() {
     return "loadfile";
   }
   @PostMapping("/save-txt")
-  public String save_txt( @RequestParam("archivos") MultipartFile file, RedirectAttributes ms) throws FileNotFoundException, ParseException {
+  public String saveTxt( @RequestParam("archivos") MultipartFile file, RedirectAttributes ms) throws FileNotFoundException, ParseException {
     upload.save(file);
     if(!readfile.nombre_correcto(file.getOriginalFilename())){
       ms.addFlashAttribute("mensaje", "El archivo no pudo ser leido");

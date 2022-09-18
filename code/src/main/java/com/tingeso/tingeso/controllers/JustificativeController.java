@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping
 public class JustificativeController {
+  static String justificativeView = "justificativeForm";
   @Autowired
   JustificativeService justificativeService;
   
@@ -24,21 +25,21 @@ public class JustificativeController {
   
   @GetMapping("/justificative-form")
   public String justificativeForm(Model model) {
-    model.addAttribute("justificative_form", new JustificativeEntity());
-    return "justificativeForm";
+    model.addAttribute(justificativeView, new JustificativeEntity());
+    return justificativeView;
   }
   @PostMapping("/justificative-form")
-  public String justificativeFormSubmit(@Valid @ModelAttribute("justificative_form") JustificativeEntity justificative_form, BindingResult result, Model model) {
+  public String justificativeFormSubmit(@Valid @ModelAttribute("justificativeForm") JustificativeEntity justificativeForm, BindingResult result, Model model) {
     if(result.hasErrors()){
-      model.addAttribute("justificative_form",  justificative_form);
-      return "justificativeForm";
+      model.addAttribute(justificativeView,  justificativeForm);
+      return justificativeView;
     }
-    if(employeeService.exists_employee(justificative_form.getRut_employee())){
-      justificativeService.save_justificative(justificative_form);
+    if(employeeService.exists_employee(justificativeForm.getRut_employee())){
+      justificativeService.save_justificative(justificativeForm);
       model.addAttribute("success",  "Justificativo ingresado");
-      return "justificativeForm";
+      return justificativeView;
     }
     model.addAttribute("wrong_user",  "El Usuario no existe");
-    return "justificativeForm";
+    return justificativeView;
   }
 }

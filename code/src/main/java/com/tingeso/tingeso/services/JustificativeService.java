@@ -27,19 +27,14 @@ public class JustificativeService {
   }
   
   public boolean save_justificative(JustificativeEntity justificative) {
-    System.out.print(justificative);
     if (employeeService.exists_employee(justificative.getRut_employee())) {
       JustificativeEntity entry = new JustificativeEntity(
         justificative.getDate(),
         justificative.getRut_employee()
       );
       justificativeRepository.save(entry);
-      System.out.println(
-        "Justificativo guardado correctamente " + entry.toString()
-      );
       return true;
     }
-    System.out.println("El empleado no existe");
     return false;
   }
   public JustificativeEntity searchJustificative(String rut_employee, String date) throws ParseException {

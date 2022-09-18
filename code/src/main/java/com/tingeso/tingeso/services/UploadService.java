@@ -23,7 +23,7 @@ public class UploadService {
         Files.write(path, bytes);
         logg.info("Archivo guardado");
       } catch (IOException e) {
-        e.printStackTrace();
+        logg.error("No se pudo guardar", e);
       }
     }
     return "Archivo guardado correctamente";

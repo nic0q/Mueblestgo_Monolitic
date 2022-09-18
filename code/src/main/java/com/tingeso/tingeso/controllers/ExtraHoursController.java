@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping
 public class ExtraHoursController {
+  static String extraHoursView = "extrahoursForm";
   @Autowired
   ExtraHoursService extraHoursService;
 
@@ -26,21 +27,21 @@ public class ExtraHoursController {
 
   @GetMapping("/extra-hours-form")
   public String extraHoursForm(Model model) {
-    model.addAttribute("extra_form", new ExtraHoursEntity());
-    return "extraHoursForm";
+    model.addAttribute(extraHoursView, new ExtraHoursEntity());
+    return extraHoursView;
   }
   @PostMapping("/extra-hours-form")
-  public String extraHoursSubmit(@Valid @ModelAttribute("extra_form") ExtraHoursEntity extra_form, BindingResult result, Model model) {
+  public String extraHoursSubmit(@Valid @ModelAttribute("extrahoursForm") ExtraHoursEntity extraForm, BindingResult result, Model model) {
     if(result.hasErrors()){
-      model.addAttribute("extra_form",  extra_form);
-      return "extraHoursForm";
+      model.addAttribute(extraHoursView,  extraForm);
+      return extraHoursView;
     }
-    if(employeeService.exists_employee(extra_form.getRut_employee())){
-      extraHoursService.save_extra_hours(extra_form);
+    if(employeeService.exists_employee(extraForm.getRut_employee())){
+      extraHoursService.save_extra_hours(extraForm);
       model.addAttribute("success",  "Horas extra ingresadas");
-      return "extraHoursForm";
+      return extraHoursView;
     }
     model.addAttribute("wrong_user",  "El Usuario no existe");
-    return "extraHoursForm";
+    return extraHoursView;
   }
 }

@@ -13,21 +13,21 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class OfficeRRHH {
-  static double DESCUENTO_TARDANZA_10min = 0.01;
-  static double DESCUENTO_TARDANZA_25min = 0.03;
-  static double DESCUENTO_TARDANZA_45min = 0.06;
-  static double DESCUENTO_INASISTENCIA = 0.15;
-  static double HORA_EXTRA_A = 25000;
-  static double HORA_EXTRA_B = 20000;
-  static double HORA_EXTRA_C = 10000;
-  static double SUELDO_A = 1700000;
-  static double SUELDO_B = 1200000;
-  static double SUELDO_C = 800000;
-  static double COTIZACION_PREVISIONAL = 0.1; 
-  static double COTIZACION_SALUD = 0.08;
-  static DateFormat dateFormaty = new SimpleDateFormat("yyyy/MM/dd");
-  static DateFormat dateFormatSQL = new SimpleDateFormat("yyyy-MM-dd");
-  static DateFormat dayFormat = new SimpleDateFormat("EEE");
+  private static final double DESCUENTO_TARDANZA_10MIN = 0.01;
+  private static final double DESCUENTO_TARDANZA_25MIN = 0.03;
+  private static final double DESCUENTO_TARDANZA_45MIN = 0.06;
+  private static final double DESCUENTO_INASISTENCIA = 0.15;
+  private static final double HORA_EXTRA_A = 25000;
+  private static final double HORA_EXTRA_B = 20000;
+  private static final double HORA_EXTRA_C = 10000;
+  private static final double SUELDO_A = 1700000;
+  private static final double SUELDO_B = 1200000;
+  private static final double SUELDO_C = 800000;
+  private static final double COTIZACION_PREVISIONAL = 0.1; 
+  private static final double COTIZACION_SALUD = 0.08;
+  private DateFormat dateFormaty = new SimpleDateFormat("yyyy/MM/dd");
+  private DateFormat dateFormatSQL = new SimpleDateFormat("yyyy-MM-dd");
+  private DateFormat dayFormat = new SimpleDateFormat("EEE");
 
   @Autowired
   ExtraHoursService extraHoursService;
@@ -108,7 +108,7 @@ public class OfficeRRHH {
       String str_day_name = dayFormat.format(day_name);
       if(str_day_name.equals("sáb") || str_day_name.equals("dom")) {
         continue;
-      };
+      }
       // NO FUE A TRABAJAR | LLEGO TARDE
       if(workedDaysService.get_dia_trabajado(rut_empleado, dateFormaty.format(c.getTime())) == null || workedDaysService.get_dia_trabajado(rut_empleado, dateFormaty.format(c.getTime())).getLate_minutes() > 70){
         if(justificativeService.searchJustificative(rut_empleado, dateFormaty.format(c.getTime())) == null){ // no tiene justificativo
@@ -123,13 +123,13 @@ public class OfficeRRHH {
   }
   public double descuentos_tardanza(Integer minutos_tarde){
     if(minutos_tarde > 45){
-      return DESCUENTO_TARDANZA_45min;
+      return DESCUENTO_TARDANZA_45MIN;
     }
     else if(minutos_tarde > 25){
-      return DESCUENTO_TARDANZA_25min;
+      return DESCUENTO_TARDANZA_25MIN;
     }
     else if(minutos_tarde > 10){
-      return DESCUENTO_TARDANZA_10min;
+      return DESCUENTO_TARDANZA_10MIN;
     }
     return 0;
   }
