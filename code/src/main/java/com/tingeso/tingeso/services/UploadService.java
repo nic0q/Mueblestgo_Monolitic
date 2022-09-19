@@ -11,7 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class UploadService {
-
   private String folder = "cargas//";
   private final Logger logg = LoggerFactory.getLogger(UploadService.class);
 

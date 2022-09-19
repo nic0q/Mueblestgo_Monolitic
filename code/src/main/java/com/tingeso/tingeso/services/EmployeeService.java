@@ -21,7 +21,4 @@ public class EmployeeService {
   public boolean exists_employee(String rut){
     return employeeRepository.findByRut(rut) != null;
   }
-  public void deleteAll(){
-    employeeRepository.deleteAll();
-  }
 }

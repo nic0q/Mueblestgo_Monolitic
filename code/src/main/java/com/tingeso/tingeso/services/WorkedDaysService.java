@@ -6,7 +6,6 @@ import com.tingeso.tingeso.repostories.WorkedDaysRepository;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,13 +14,7 @@ import org.springframework.stereotype.Service;
 public class WorkedDaysService {
   @Autowired
   WorkedDaysRepository workedDaysRepository;
-  
-  public List<WorkedDaysEntity> get_dias_trabajados() {
-    return workedDaysRepository.findAll();
-  }
-  public List<WorkedDaysEntity> obtener_dias_trabajados(String rut_empleado){
-    return get_dias_trabajados().stream().filter(dia -> dia.getRut_employee().equals(rut_empleado) && dia.getLate_minutes() <= 70).toList();
-  }
+
   public Date obtener_fecha_inicio(){
     return workedDaysRepository.getDate();
   }
