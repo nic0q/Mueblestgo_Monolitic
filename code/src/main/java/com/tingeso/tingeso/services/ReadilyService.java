@@ -23,11 +23,11 @@ public class ReadilyService {
   @Autowired
   private WorkedDaysService workedDaysService;
 
-  static String ENTRY_TIME = "08:00"; // Todos los empleados deben llegar a las 8:00
-  static String EXIT_TIME = "18:00"; // Todos los empleados deben salir a las 18:00 (Pueden haber horas extras)
+  private static final String ENTRY_TIME = "08:00"; // Todos los empleados deben llegar a las 8:00
+  private static final String EXIT_TIME = "18:00"; // Todos los empleados deben salir a las 18:00 (Pueden haber horas extras)
   List<String> laboral_days = Arrays.asList("lun", "mar", "mié", "jue", "vie"); // 5 laboral days
   private static DateFormat hours_mins = new SimpleDateFormat("hh:mm");
-  static String NOMBRE_TXT = "DATA.txt";
+  private static final String NOMBRE_TXT = "DATA.txt";
 
   public boolean nombre_correcto(String nombre) {
     return nombre.equals(NOMBRE_TXT);
@@ -36,7 +36,7 @@ public class ReadilyService {
     try {
     
     InputStream ins = new FileInputStream("cargas/"+NOMBRE_TXT);
-    ArrayList<String> dias = new ArrayList<String>();
+    ArrayList<String> dias = new ArrayList<>();
     Map<String, ArrayList<String>> ruts_map = new HashMap<>();
     try (Scanner obj = new Scanner(ins)) {
       while (obj.hasNextLine()) {

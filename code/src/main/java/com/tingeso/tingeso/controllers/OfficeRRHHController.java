@@ -3,6 +3,7 @@ package com.tingeso.tingeso.controllers;
 import com.tingeso.tingeso.entities.EmployeeEntity;
 import com.tingeso.tingeso.entities.PlanillaSueldos;
 import com.tingeso.tingeso.services.EmployeeService;
+import com.tingeso.tingeso.services.ExtraHoursService;
 import com.tingeso.tingeso.services.OfficeRRHH;
 
 import java.text.ParseException;
@@ -24,6 +25,8 @@ public class OfficeRRHHController {
 
   @Autowired
   EmployeeService employeeService;
+  @Autowired
+  ExtraHoursService extraHoursService;
 
   @GetMapping("/calcular-sueldos")
   public String getSalaries(Model model) throws ParseException {
@@ -36,10 +39,10 @@ public class OfficeRRHHController {
       employees.get(i).getName(),
       employees.get(i).getLast_name(),
       employees.get(i).getCategory(),
-      officeRRHH.get_service_years(employees.get(i).getRut()),
-      officeRRHH.get_sueldo_base(employees.get(i).getRut()),
-      officeRRHH.calcular_bonificaciones(employees.get(i).getRut()),
-      officeRRHH.calcular_sueldo_horas_extra(employees.get(i).getRut()),
+      officeRRHH.calcular_anios_servicio(employees.get(i).getRut()),
+      officeRRHH.get_sueldo_base(employees.get(i).getCategory()),
+      officeRRHH.calcular_bonificaciones(officeRRHH.calcular_anios_servicio(employees.get(i).getRut()),officeRRHH.get_sueldo_base(employees.get(i).getCategory())),
+      officeRRHH.calcular_sueldo_horas_extra(employees.get(i).getCategory(),extraHoursService.get_extra_hours_efectivas(employees.get(i).getRut())),
       officeRRHH.calcular_descuentos(employees.get(i).getRut()),
       officeRRHH.calcular_sueldo_bruto(employees.get(i).getRut()),
       officeRRHH.calcular_cotizacion_previsional(officeRRHH.calcular_sueldo_bruto(employees.get(i).getRut())),

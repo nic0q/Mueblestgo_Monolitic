@@ -29,7 +29,6 @@ public class ExtraHoursService {
   WorkedDaysService workedDaysService;
 
   public Date convertir_fecha(String fecha) throws ParseException{
-    
     java.util.Date date = dateFormatSQL.parse(fecha);
     java.sql.Date sqlStartDate = new java.sql.Date(date.getTime()); 
     return sqlStartDate;

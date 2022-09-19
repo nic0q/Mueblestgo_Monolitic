@@ -44,7 +44,7 @@ SELECT * FROM justificative;
 SELECT * FROM extra_hours;
 SELECT * FROM worked_days;
 
-DELETE FROM employee WHERE rut > 0;
+DELETE FROM employee WHERE id > 0;
 DELETE FROM worked_days WHERE id > 0;
 DELETE FROM extra_hours WHERE id > 0;
 DELETE FROM justificative WHERE id > 0;

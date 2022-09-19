@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 @EnableJpaRepositories
 public interface EmployeeRepository extends JpaRepository<EmployeeEntity, String> {
-  public EmployeeEntity findByRut(String rut);
+  EmployeeEntity findByRut(String rut);
 }
