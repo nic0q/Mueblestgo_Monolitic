@@ -81,7 +81,7 @@ public class OfficeRRHH {
     return valor_horas_extra(categoria, n_horas_extra);
   }
   public int calcular_anios_servicio(String entry_date) throws ParseException{
-    return (int) Math.floor(TimeUnit.MILLISECONDS.toDays((dateFormatSQL.parse(java.time.LocalDate.now().toString()).getTime() - dateFormatSQL.parse(entry_date).getTime()))*0.00273785);
+    return (int) Math.floor(TimeUnit.MILLISECONDS.toDays((dateFormatSQL.parse(java.time.LocalDate.now().toString()).getTime() - dateFormaty.parse(entry_date).getTime()))*0.00273785);
   }
   public double calcular_bonificaciones(int anios_servicio, double sueldo_base){
     if(anios_servicio >= 25){
