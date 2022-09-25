@@ -43,8 +43,8 @@ SELECT * FROM employee;
 SELECT * FROM justificative;
 SELECT * FROM extra_hours;
 SELECT * FROM worked_days;
-
-DELETE FROM employee WHERE id > 0;
+SELECT * FROM employee LIMIT 1;
+DELETE FROM employee WHERE`name` = "21457671-9";
 DELETE FROM worked_days WHERE id > 0;
 DELETE FROM extra_hours WHERE id > 0;
 DELETE FROM justificative WHERE id > 0;
