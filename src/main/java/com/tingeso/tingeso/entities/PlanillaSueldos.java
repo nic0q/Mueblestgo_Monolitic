@@ -6,7 +6,6 @@ import lombok.ToString;
 import lombok.Getter;
 import lombok.Setter;
 
-@ToString
 @AllArgsConstructor
 public class PlanillaSueldos {
   private @Getter @Setter String rut_empleado;

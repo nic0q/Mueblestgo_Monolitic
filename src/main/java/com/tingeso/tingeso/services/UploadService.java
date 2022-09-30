@@ -1,5 +1,6 @@
 package com.tingeso.tingeso.services;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -11,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class UploadService {
-  private String folder = "cargas//";
+  private String folder = "cargas"+File.pathSeparator;
   private final Logger logg = LoggerFactory.getLogger(UploadService.class);
 
   public String save(MultipartFile file) {

@@ -1,6 +1,5 @@
-show databases;
 SHOW DATABASES;
-USE tingeso;
+USE mueblestgo;
 SHOW TABLES;
 CREATE TABlE IF NOT EXISTS employee (
     rut char(10),
@@ -11,7 +10,6 @@ CREATE TABlE IF NOT EXISTS employee (
     entry_date varchar(20),
     PRIMARY KEY(rut)
 );
-DROP TABLE employee;
 CREATE TABlE IF NOT EXISTS worked_days (
 	id int auto_increment,
     rut_employee char(10),
@@ -21,7 +19,6 @@ CREATE TABlE IF NOT EXISTS worked_days (
     FOREIGN KEY(rut_employee) REFERENCES employee(rut),
     PRIMARY KEY(id)
 );
-DROP TABLE worked_days;
 CREATE TABLE IF NOT EXISTS extra_hours(
 	id int auto_increment,
     `date` date,
@@ -30,7 +27,6 @@ CREATE TABLE IF NOT EXISTS extra_hours(
     FOREIGN KEY(rut_employee) REFERENCES employee(rut),
     PRIMARY KEY(id)
 );
-DROP TABLE extra_hours;
 CREATE TABLE IF NOT EXISTS justificative(
 	id int auto_increment,
     `date` date,
@@ -38,7 +34,9 @@ CREATE TABLE IF NOT EXISTS justificative(
     FOREIGN KEY(rut_employee) REFERENCES employee(rut),
     PRIMARY KEY(id)
 );
-DROP TABLE justificative;
+INSERT INTO employee(rut, `name`,last_name,category,birth_date,entry_date) VALUES("20457671-9","UNO","TRES","A","1955/03/22","2010/05/24");
+INSERT INTO employee(rut, `name`,last_name,category,birth_date,entry_date) VALUES("27752982-4","DOS","CUATRO","B","2001/11/18","2015/05/10");
+
 SELECT * FROM employee;
 SELECT * FROM justificative;
 SELECT * FROM extra_hours;
@@ -56,8 +54,7 @@ INSERT INTO employee(rut, `name`,last_name,category,birth_date,entry_date) VALUE
 INSERT INTO employee(rut, `name`,last_name,category,birth_date,entry_date) VALUES("11234123-6","ROBERTO","CARLOS","B","1999/03/22","2000/03/22");
 INSERT INTO employee(rut, `name`,last_name,category,birth_date,entry_date) VALUES("17765876-2","LOCO","RANDOM","B","1955/03/22","1999/03/22");
 
-INSERT INTO employee(rut, `name`,last_name,category,birth_date,entry_date) VALUES("20457671-9","UNO","TRES","A","1955/03/22","2010/05/24");
-INSERT INTO employee(rut, `name`,last_name,category,birth_date,entry_date) VALUES("27752982-4","DOS","CUATRO","B","2001/11/18","2015/05/10");
+    
 
 
 INSERT INTO `tingeso`.`worked_days`

@@ -1,0 +1,33 @@
+version: '2'
+
+services:
+  db:
+    image: 'mysql'
+    restart: always
+    environment:
+      - MYSQL_DATABASE=mueblestgo
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_PASSWORD=root
+    ports:
+      - 3306:3306      
+  app:
+    image: 'monolitic-app:latest'
+    restart: on-failure
+    build:
+      context: "./"
+    container_name: app
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/mueblestgo?autorReconnect=true&allowPublicKeyRetrieval=true&useSSL=false
+      - SPRING_DATASOURCE_DBNAME=mueblestgo
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_DATASOURCE_DRIVER-CLASS-NAME=com.mysql.cj.jdbc.Driver
+    ports:
+      - 8080:8080
+    volumes:
+      - mysql_data:/monolitic-app
+volumes:
+  mysql_data:
+    external: false   

@@ -1,5 +1,6 @@
 package com.tingeso.tingeso.services;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ReadilyService {
-
+  private String folder = "cargas"+File.pathSeparator;
   @Autowired
   private WorkedDaysService workedDaysService;
 
@@ -30,9 +31,10 @@ public class ReadilyService {
     return nombre.equals(NOMBRE_TXT);
   }
 
-  public boolean readFile(int test) throws FileNotFoundException, ParseException {
+  public boolean readFile(int test)
+    throws FileNotFoundException, ParseException {
     try {
-      InputStream ins = new FileInputStream("cargas/" + NOMBRE_TXT);
+      InputStream ins = new FileInputStream(folder + NOMBRE_TXT);
       ArrayList<String> dias = new ArrayList<>();
       Map<String, ArrayList<String>> ruts_map = new HashMap<>();
       try (Scanner obj = new Scanner(ins)) {
@@ -51,13 +53,13 @@ public class ReadilyService {
             ruts_map.put(rut, temp); // hashmap rut and entry time
           } else {
             ruts_map.get(rut).add(hora); // hashmap exit time
-            if(test != 1){
+            if (test != 1) {
               workedDaysService.insert_worked_day(
-              rut,
-              date,
-              extraHours(ruts_map.get(rut).get(1)),
-              getLateMinutes(ruts_map.get(rut).get(0))
-            );
+                rut,
+                date,
+                extraHours(ruts_map.get(rut).get(1)),
+                getLateMinutes(ruts_map.get(rut).get(0))
+              );
             }
           }
         }
@@ -67,6 +69,7 @@ public class ReadilyService {
       return false;
     }
   }
+
   public Integer getLateMinutes(String entry_t) throws ParseException {
     long horas_trabajadas =
       hours_mins.parse(entry_t).getTime() -
@@ -76,6 +79,7 @@ public class ReadilyService {
     }
     return (int) TimeUnit.MILLISECONDS.toMinutes(horas_trabajadas);
   }
+
   public Integer extraHours(String exit_t) throws ParseException {
     Date salida_normal = hours_mins.parse(EXIT_TIME);
     Date salida = hours_mins.parse(exit_t);

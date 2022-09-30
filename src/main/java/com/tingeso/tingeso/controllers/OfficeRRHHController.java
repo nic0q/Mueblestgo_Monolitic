@@ -26,11 +26,10 @@ public class OfficeRRHHController {
 
   @Autowired
   ExtraHoursService extraHoursService;
-
+  
   @GetMapping("/calcular-sueldos")
   public String getSalaries(Model model) throws ParseException {
     List<EmployeeEntity> employees = employeeService.getEmployees();
-
     List<PlanillaSueldos> sueldos = new ArrayList<>();
     for (int i = 0; i < employees.size(); i++) {
       PlanillaSueldos planillaSueldos = new PlanillaSueldos(

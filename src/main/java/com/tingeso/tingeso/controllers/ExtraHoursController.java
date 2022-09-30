@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping
 public class ExtraHoursController {
-  static String extraHoursView = "extrahoursForm";
+  static String extraHoursView = "extraHoursForm";
   @Autowired
   ExtraHoursService extraHoursService;
 
@@ -31,7 +31,7 @@ public class ExtraHoursController {
     return extraHoursView;
   }
   @PostMapping("/extra-hours-form")
-  public String extraHoursSubmit(@Valid @ModelAttribute("extrahoursForm") ExtraHoursEntity extraForm, BindingResult result, Model model) {
+  public String extraHoursSubmit(@Valid @ModelAttribute("extraHoursForm") ExtraHoursEntity extraForm, BindingResult result, Model model) {
     if(result.hasErrors()){
       model.addAttribute(extraHoursView,  extraForm);
       return extraHoursView;
