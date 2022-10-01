@@ -13,6 +13,13 @@ pipeline {
                 bat 'mvn package spring-boot:repackage -DskipTests'
             }
         }
+        stage('Sonar'){
+            steps{
+                withSonarQubeEnv('sonar'){
+                    bat 'mvn sonar:sonar'
+                }
+            }
+        }
         stage('Test') {
             steps {
                 bat 'mvn test'
