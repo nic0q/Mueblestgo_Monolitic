@@ -23,8 +23,8 @@ pipeline {
         stage('Push docker image'){
             steps {
                 script{
-                    withCredentials([string(credentialsId: 'docker-pass', variable: 'dockerpass')]) {
-                        bat 'docker login -u inse1n -p ${dockerpass}'
+                    withCredentials([string(credentialsId: 'docker-pass', variable: 'docker-pass')]) {
+                        bat 'docker login -u inse1n -p ${docker-pass}'
                     }
                     bat 'docker push inse1n/mueblestgo'
                 }
