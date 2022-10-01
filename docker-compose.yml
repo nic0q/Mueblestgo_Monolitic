@@ -17,11 +17,11 @@ services:
     depends_on:
       - db-mueblestgo
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://db-mueblestgo:3306/mueblestgo?autorReconnect=true&allowPublicKeyRetrieval=true&useSSL=false
-      - SPRING_DATASOURCE_DBNAME=mueblestgo
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=root
-      - SPRING_DATASOURCE_DRIVER-CLASS-NAME=com.mysql.cj.jdbc.Driver
+      - DB_URL=jdbc:mysql://db-mueblestgo:3306/mueblestgo?autorReconnect=true&allowPublicKeyRetrieval=true&useSSL=false
+      - DB_NAME=mueblestgo
+      - DB_USR=root
+      - DB_PSW=root
+      - DB_DTSRC=com.mysql.cj.jdbc.Driver
     ports:
       - 8080:8080
     volumes:
