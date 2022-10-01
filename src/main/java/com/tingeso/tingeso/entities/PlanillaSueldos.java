@@ -1,7 +1,6 @@
 package com.tingeso.tingeso.entities;
 
 import lombok.AllArgsConstructor;
-import lombok.ToString;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -35,7 +35,6 @@ public class OfficeRRHH {
   private static final double COTIZACION_SALUD = 0.08;
   private DateFormat dateFormaty = new SimpleDateFormat("yyyy/MM/dd");
   private DateFormat dateFormatSQL = new SimpleDateFormat("yyyy-MM-dd");
-  private DateFormat dayFormat = new SimpleDateFormat("EEE");
 
   @Autowired
   private ExtraHoursService extraHoursService;
@@ -122,16 +121,18 @@ public class OfficeRRHH {
     int lastDay = c.getActualMaximum(Calendar.DAY_OF_MONTH); // dia maximo del mes
     for (int day = 1; day <= lastDay; day++) {
       c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), day);
-      String str_day_name = dayFormat.format(c.getTime());
-      if(str_day_name.equals("sab") || str_day_name.equals("dom")) {
+      int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+      if(dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY) {
         continue;
       }
       if(workedDaysService.get_dia_trabajado(rut_empleado, dateFormaty.format(c.getTime())) == null || workedDaysService.get_dia_trabajado(rut_empleado, dateFormaty.format(c.getTime())).getLate_minutes() > 70){
+        System.out.println(rut_empleado + " NO ASISTIO EL DIA " + dateFormaty.format(c.getTime()));
         if(justificativeService.searchJustificative(rut_empleado, dateFormaty.format(c.getTime())) == null){ // no tiene justificativo
           descuentos += sueldo_base * DESCUENTO_INASISTENCIA;
         }
       }
       else{ 
+        System.out.println(rut_empleado + " ASISTIO EL DIA " + dateFormaty.format(c.getTime()));
         descuentos += descuentos_tardanza(workedDaysService.get_dia_trabajado(rut_empleado, dateFormaty.format(c.getTime())).getLate_minutes(), sueldo_base);
       }
     }
