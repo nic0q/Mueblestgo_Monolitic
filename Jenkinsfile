@@ -14,7 +14,9 @@ pipeline {
             }
         }
         stage('SonarQube analysis') {
-            bat 'mvn sonar:sonar'
+            steps{
+                bat 'mvn sonar:sonar'
+            }
         }
         stage('Test') {
             steps {

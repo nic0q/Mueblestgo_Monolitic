@@ -17,14 +17,14 @@ services:
     depends_on:
       - db-mueblestgo
     environment:
-      - DB_URL=jdbc:mysql://db-mueblestgo:3306/mueblestgo?autorReconnect=true&allowPublicKeyRetrieval=true&useSSL=false
+      - DB_HOSTNAME=db-mueblestgo
+      - DB_PORT=3306
       - DB_NAME=mueblestgo
       - DB_USR=root
       - DB_PSW=root
-      - DB_DTSRC=com.mysql.cj.jdbc.Driver
     ports:
       - 8080:8080
     volumes:
       -  mueblestgo_data:/var/lib/mysql
 volumes:
-  mueblestgo_data:             
+  mueblestgo_data:
