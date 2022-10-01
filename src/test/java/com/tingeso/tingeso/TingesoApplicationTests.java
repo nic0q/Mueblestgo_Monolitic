@@ -6,17 +6,13 @@ import java.io.FileNotFoundException;
 import java.text.ParseException;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import com.tingeso.tingeso.entities.EmployeeEntity;
 import com.tingeso.tingeso.services.OfficeRRHH;
 import com.tingeso.tingeso.services.ReadilyService;
 
-@SpringBootTest
 class OfficeRRHHTests {
-  @Autowired
-  OfficeRRHH officeRRHH;
+  OfficeRRHH officeRRHH = new OfficeRRHH();
   @Test
   void testSueldoBaseCatA(){
     EmployeeEntity employee = new EmployeeEntity();
@@ -123,10 +119,8 @@ class OfficeRRHHTests {
     assertEquals(2460000, sueldo_final, 0.0);
   }
 }
-@SpringBootTest
 class ReadilyServiceTests {
-  @Autowired
-  ReadilyService readilyService;
+  ReadilyService readilyService = new ReadilyService();
   
   @Test
   void getLateMinutesTest() throws ParseException{
