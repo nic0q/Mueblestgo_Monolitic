@@ -7,7 +7,7 @@ pipeline {
         stage('Build jar file') {
             steps {
                 checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://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@github.com/nic0q/muebles-stgo.git']]])
-                sh 'mvn clean install -DskipTests'
+                sh 'mvn package spring-boot:repackage -DskipTests'
             }
         }
         stage('Test') {
