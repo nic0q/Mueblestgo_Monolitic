@@ -20,13 +20,13 @@ pipeline {
                 bat 'docker build -t inse1n/mueblestgo .'
             }
         }
-        stage('Pubat docker image'){
+        stage('Push docker image'){
             steps {
                 script{
-                    withCredentials([string(credentialsId: 'DcHiC1cu7Ob', variable: 'DcHiC1cu7Ob')]) {
-                        bat 'docker login -u inse1n -p ${DcHiC1cu7Ob}'
+                    withCredentials([string(credentialsId: 'docker-pass', variable: 'dockerpass')]) {
+                        bat 'docker login -u inse1n -p ${dockerpass}'
                     }
-                    bat 'docker pubat inse1n/mueblestgo'
+                    bat 'docker push inse1n/mueblestgo'
                 }
             }
         }
