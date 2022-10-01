@@ -59,16 +59,17 @@ public class OfficeRRHH {
     return (Math.round(sueldo*100.0)/100.0);
   }
   public double valor_horas_extra(String categoria, Integer n_horas_extra){
+    double horas = 0;
     if(categoria.equals("A")){
-      return n_horas_extra * HORA_EXTRA_A;
+      horas = n_horas_extra * HORA_EXTRA_A;
     }
     else if(categoria.equals("B")){
-      return n_horas_extra * HORA_EXTRA_B;
+      horas = n_horas_extra * HORA_EXTRA_B;
     }
     else if(categoria.equals("C")){
-      return n_horas_extra * HORA_EXTRA_C;
+      horas = n_horas_extra * HORA_EXTRA_C;
     }
-    return n_horas_extra;
+    return horas;
   }
   public double calcular_sueldo_horas_extra(String categoria, List<ExtraHoursEntity> horas_extra){
     int n_horas_extra = 0;
@@ -101,16 +102,17 @@ public class OfficeRRHH {
     return 0;
   }
   public double descuentos_tardanza(Integer minutos_tarde, double sueldo_base){
+    double desc_tardanza = 0;
     if(minutos_tarde > 45){
-      return sueldo_base * DESCUENTO_TARDANZA_45MIN;
+      desc_tardanza = sueldo_base * DESCUENTO_TARDANZA_45MIN;
     }
     else if(minutos_tarde > 25){
-      return sueldo_base * DESCUENTO_TARDANZA_25MIN;
+      desc_tardanza = sueldo_base * DESCUENTO_TARDANZA_25MIN;
     }
     else if(minutos_tarde > 10){
-      return sueldo_base * DESCUENTO_TARDANZA_10MIN;
+      desc_tardanza = sueldo_base * DESCUENTO_TARDANZA_10MIN;
     }
-    return 0;
+    return desc_tardanza;
   }
   public double calcular_descuentos(String rut_empleado) throws ParseException{
     double sueldo_base = get_sueldo_base(employeeService.getEmployeeByRut(rut_empleado).getCategory());
@@ -149,7 +151,7 @@ public class OfficeRRHH {
     return (Math.round((sueldo_bruto * COTIZACION_SALUD)*100.0)/100.0); 
   }
   public double calcular_cotizacion_previsional(double sueldo_bruto){
-    return  (Math.round((sueldo_bruto * COTIZACION_PREVISIONAL)*100.0)/100.0);
+    return (Math.round((sueldo_bruto * COTIZACION_PREVISIONAL)*100.0)/100.0);
   }
   public double calcular_sueldo_final(double sueldo_bruto){
     return sueldo_bruto - calcular_cotizacion_salud(sueldo_bruto) - calcular_cotizacion_previsional(sueldo_bruto);

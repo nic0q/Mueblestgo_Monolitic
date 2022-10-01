@@ -10,18 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.tingeso.tingeso.entities.EmployeeEntity;
-import com.tingeso.tingeso.repostories.EmployeeRepository;
 import com.tingeso.tingeso.services.OfficeRRHH;
 import com.tingeso.tingeso.services.ReadilyService;
 
 @SpringBootTest
 class OfficeRRHHTests {
   @Autowired
-  EmployeeRepository employeeRepository;
-	@Autowired
   OfficeRRHH officeRRHH;
   @Test
-  void testSueldoBase(){
+  void testSueldoBaseCatA(){
     EmployeeEntity employee = new EmployeeEntity();
     employee.setRut("12345678-9");
     employee.setCategory("A");
@@ -29,13 +26,47 @@ class OfficeRRHHTests {
     assertEquals(1700000, sueldo_base, 0.0);
   }
   @Test
-  void testValorHorasExtra(){
+  void testSueldoBaseCatB(){
+    EmployeeEntity employee = new EmployeeEntity();
+    employee.setRut("12345678-9");
+    employee.setCategory("B");
+    double sueldo_base = officeRRHH.get_sueldo_base(employee.getCategory());
+    assertEquals(1200000, sueldo_base, 0.0);
+  }
+  @Test
+  void testSueldoBaseCatC(){
+    EmployeeEntity employee = new EmployeeEntity();
+    employee.setRut("12345678-9");
+    employee.setCategory("C");
+    double sueldo_base = officeRRHH.get_sueldo_base(employee.getCategory());
+    assertEquals(800000, sueldo_base, 0.0);
+  }
+  @Test
+  void testValorHorasExtraA(){
     EmployeeEntity employee = new EmployeeEntity();
     employee.setRut("12345678-9");
     employee.setCategory("A");
     int horas_extra = 20;
     double valor_horas_extra = officeRRHH.valor_horas_extra(employee.getCategory(), horas_extra);
     assertEquals(500000, valor_horas_extra, 0.0);
+  }
+  @Test
+  void testValorHorasExtraB(){
+    EmployeeEntity employee = new EmployeeEntity();
+    employee.setRut("12345678-9");
+    employee.setCategory("B");
+    int horas_extra = 20;
+    double valor_horas_extra = officeRRHH.valor_horas_extra(employee.getCategory(), horas_extra);
+    assertEquals(400000, valor_horas_extra, 0.0);
+  }
+  @Test
+  void testValorHorasExtraC(){
+    EmployeeEntity employee = new EmployeeEntity();
+    employee.setRut("12345678-9");
+    employee.setCategory("C");
+    int horas_extra = 20;
+    double valor_horas_extra = officeRRHH.valor_horas_extra(employee.getCategory(), horas_extra);
+    assertEquals(200000, valor_horas_extra, 0.0);
   }
   @Test
   void testAniosServicio() throws ParseException{
@@ -85,13 +116,8 @@ class OfficeRRHHTests {
     double cotizacion_previsional = officeRRHH.calcular_cotizacion_previsional(sueldo_base);
     assertEquals(170000, cotizacion_previsional, 0.0);
   }
-  // @Test
-  // void calcular_sueldo() throws ParseException{
-  //   double sueldo = officeRRHH.calcular_sueldo_bruto(employeeRepository.findOne().getRut());
-  //   assertEquals(204000, sueldo, 0.0);
-  // }
   @Test
-  void testSueldoFinal() throws ParseException{
+  void testSueldoFinal(){
     double sueldo_bruto = 3000000;
     double sueldo_final = officeRRHH.calcular_sueldo_final(sueldo_bruto);
     assertEquals(2460000, sueldo_final, 0.0);
