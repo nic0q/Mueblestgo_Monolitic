@@ -126,13 +126,11 @@ public class OfficeRRHH {
         continue;
       }
       if(workedDaysService.get_dia_trabajado(rut_empleado, dateFormaty.format(c.getTime())) == null || workedDaysService.get_dia_trabajado(rut_empleado, dateFormaty.format(c.getTime())).getLate_minutes() > 70){
-        System.out.println(rut_empleado + " NO ASISTIO EL DIA " + dateFormaty.format(c.getTime()));
         if(justificativeService.searchJustificative(rut_empleado, dateFormaty.format(c.getTime())) == null){ // no tiene justificativo
           descuentos += sueldo_base * DESCUENTO_INASISTENCIA;
         }
       }
       else{ 
-        System.out.println(rut_empleado + " ASISTIO EL DIA " + dateFormaty.format(c.getTime()));
         descuentos += descuentos_tardanza(workedDaysService.get_dia_trabajado(rut_empleado, dateFormaty.format(c.getTime())).getLate_minutes(), sueldo_base);
       }
     }
