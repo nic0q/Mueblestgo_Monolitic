@@ -3,6 +3,9 @@ pipeline {
     tools{
         maven 'mvn'
     }
+    environment{
+        DOCKERHUB_CREDENTIALS=credentials('dockerhub')
+    }
     stages {
         stage('Build jar file') {
             steps {
@@ -20,14 +23,14 @@ pipeline {
                 bat 'docker build -t inse1n/mueblestgo .'
             }
         }
-        stage('Push docker image'){
+        stage('Login'){
             steps {
-                script{
-                    withCredentials([string(credentialsId: 'docker-pass', variable: 'docker-pass')]) {
-                        bat 'docker login -u inse1n -p ${docker-pass}'
-                    }
-                    bat 'docker push inse1n/mueblestgo'
-                }
+                bat 'docker login -u %DOCKERHUB_CREDENTIALS_USR% -p %DOCKERHUB_CREDENTIALS_PSW%'
+            }
+        }
+        stage('Push'){
+            steps{
+                bat 'docker push inse1n/mueblestgo'
             }
         }
     }
