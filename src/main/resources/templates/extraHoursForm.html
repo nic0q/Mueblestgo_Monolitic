@@ -14,7 +14,7 @@
             <label>RUT Empleado</label>
             <input type="text" th:field="*{rut_employee}"/>
             <div class="bar error" th:if="${#fields.hasErrors('rut_employee')}" th:errors="*{rut_employee}"></div>
-            <div  class="bar error" th:if="${wrong_user}" th:text="${wrong_user}"></div>
+            <div class="bar error" th:if="${wrong_user}" th:text="${wrong_user}"></div>
             <br>
             <br>
             <label>Fecha</label>

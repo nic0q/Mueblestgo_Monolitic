@@ -5,9 +5,12 @@ spring:
     show-sql: true
     hibernate:
       dialect: MySQL8Dialect
-      ddl-auto: create
+      ddl-auto: create  
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
+    #url: jdbc:mysql://localhost:3306/mueblestgo
+    #username: root
+    #password: abcd
     url: jdbc:mysql://${DB_HOSTNAME}:${DB_PORT}/${DB_NAME}?autorReconnect=true&allowPublicKeyRetrieval=true&useSSL=false
     username: ${DB_USR}
     password: ${DB_PSW}

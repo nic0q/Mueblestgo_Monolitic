@@ -1,0 +1,2 @@
+INSERT INTO employee(rut, `name`,last_name,category,birth_date,entry_date) VALUES("20457671-9","UNO","TRES","A","1955/03/22","2010/05/24");
+INSERT INTO employee(rut, `name`,last_name,category,birth_date,entry_date) VALUES("27752982-4","DOS","CUATRO","B","2001/11/18","2015/05/10");

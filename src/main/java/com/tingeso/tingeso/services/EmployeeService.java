@@ -21,4 +21,7 @@ public class EmployeeService {
   public boolean exists_employee(String rut){
     return employeeRepository.findByRut(rut) != null;
   }
+  public EmployeeEntity findOne(){
+    return employeeRepository.findOne();
+  }
 }

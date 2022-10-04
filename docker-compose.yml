@@ -1,5 +1,4 @@
-version: '2'
-
+version: '3.8'
 services:
   db-mueblestgo:
     image: 'mysql'
@@ -10,6 +9,8 @@ services:
       - MYSQL_PASSWORD=root
     ports:
       - 3306:3306      
+    volumes:
+      - mueblestgo_data:/var/lib/mysql
   mueblestgo:
     image: 'inse1n/mueblestgo'
     restart: on-failure
@@ -24,7 +25,15 @@ services:
       - DB_PSW=root
     ports:
       - 8080:8080
+  nginx:
+    container_name: nginx-proxy
+    image: nginx
+    restart: always
+    ports:
+      - "80:80"
     volumes:
-      -  mueblestgo_data:/var/lib/mysql
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - mueblestgo     
 volumes:
   mueblestgo_data:

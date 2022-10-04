@@ -24,9 +24,9 @@ public class ReadilyService {
 
   private static final String ENTRY_TIME = "08:00";
   private static final String EXIT_TIME = "18:00";
-  private static final DateFormat hours_mins = new SimpleDateFormat("hh:mm");
   private static final String NOMBRE_TXT = "DATA.txt";
-
+  private DateFormat hours_mins = new SimpleDateFormat("hh:mm");
+  
   public boolean nombre_correcto(String nombre) {
     return nombre.equals(NOMBRE_TXT);
   }
@@ -66,7 +66,7 @@ public class ReadilyService {
       }
       return true;
     } catch (FileNotFoundException e) {
-      return false;
+        return false;
     }
   }
 

@@ -22,8 +22,7 @@ public class JustificativeService {
   public Date convertir_fecha(String fecha) throws ParseException{
     SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy/MM/dd");
     java.util.Date date = sdf1.parse(fecha);
-    java.sql.Date sqlStartDate = new java.sql.Date(date.getTime()); 
-    return sqlStartDate;
+    return new java.sql.Date(date.getTime());
   }
   
   public boolean save_justificative(JustificativeEntity justificative) {
