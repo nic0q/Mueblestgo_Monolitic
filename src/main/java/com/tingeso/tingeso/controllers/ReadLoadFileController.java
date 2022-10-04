@@ -46,7 +46,7 @@ public class ReadLoadFileController {
     justificativeService.deleteAll();
     extraHoursService.deleteAll();
     workedDaysService.deleteAll();
-    readfile.readFile(0);
+    readfile.readFile();
     return "redirect:/";
   }
 }

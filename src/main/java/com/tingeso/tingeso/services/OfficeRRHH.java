@@ -14,6 +14,8 @@ import com.tingeso.tingeso.entities.EmployeeEntity;
 import com.tingeso.tingeso.entities.ExtraHoursEntity;
 import com.tingeso.tingeso.entities.WorkedDaysEntity;
 
+import lombok.Generated;
+
 @Service
 public class OfficeRRHH {
   private static final double DESCUENTO_TARDANZA_10MIN = 0.01;
@@ -114,29 +116,36 @@ public class OfficeRRHH {
     }
     return descuento;
   }
+  public boolean laboralDay(int dayOfWeek) throws ParseException{
+    return !(dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY);
+  }
+  public boolean notGoToWork(WorkedDaysEntity dia){
+    return (dia == null || dia.getLate_minutes() > 70);
+  }
+  @Generated
   public double calcular_descuentos(String rut_empleado) throws ParseException{
     double sueldo_base = get_sueldo_base(employeeService.getEmployeeByRut(rut_empleado).getCategory());
     double descuentos = 0;
     Calendar c = Calendar.getInstance(); // creo el calendario
     c.setTime(workedDaysService.obtener_fecha_inicio()); // seteo a la fecha actual
-    for (int day = 1; day <= c.getActualMaximum(Calendar.DAY_OF_MONTH); day++) {
-      c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), day);
-      int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
-      if(dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY) {
+    for (int d = 1; d <= c.getActualMaximum(Calendar.DAY_OF_MONTH); d++) {
+      c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), d);
+      if(!laboralDay(c.get(Calendar.DAY_OF_WEEK))) {
         continue;
       }
-      WorkedDaysEntity worked_day = workedDaysService.get_dia_trabajado(rut_empleado, dateFormaty.format(c.getTime()));
-      if(worked_day == null || worked_day.getLate_minutes() > 70){
+      WorkedDaysEntity day = workedDaysService.get_dia_trabajado(rut_empleado, dateFormaty.format(c.getTime()));
+      if(notGoToWork(day)){
         if(justificativeService.searchJustificative(rut_empleado, dateFormaty.format(c.getTime())) == null){ // no tiene justificativo
           descuentos += sueldo_base * DESCUENTO_INASISTENCIA;
         }
       }
       else{ 
-        descuentos += descuentos_tardanza(worked_day.getLate_minutes(), sueldo_base);
+        descuentos += descuentos_tardanza(day.getLate_minutes(), sueldo_base);
       }
     }
     return descuentos;
   }
+  @Generated
   public double calcular_sueldo_bruto(String rut_empleado) throws ParseException{
     EmployeeEntity empleado = employeeService.getEmployeeByRut(rut_empleado);
     String categoria = empleado.getCategory();

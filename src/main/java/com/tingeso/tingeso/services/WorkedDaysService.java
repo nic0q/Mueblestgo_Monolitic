@@ -3,6 +3,8 @@ package com.tingeso.tingeso.services;
 import com.tingeso.tingeso.entities.WorkedDaysEntity;
 import com.tingeso.tingeso.repositories.WorkedDaysRepository;
 
+import lombok.Generated;
+
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -30,6 +32,7 @@ public class WorkedDaysService {
     WorkedDaysEntity workedDaysEntity = new WorkedDaysEntity(rut_empleado,convertir_fecha(fecha),horas_extra, minutos_tarde);
     workedDaysRepository.save(workedDaysEntity);
   }
+  @Generated
   public void deleteAll(){
     workedDaysRepository.deleteAll();
   }

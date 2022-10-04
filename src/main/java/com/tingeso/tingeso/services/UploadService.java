@@ -10,11 +10,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import lombok.Generated;
+
 @Service
+@Generated
 public class UploadService {
   private String folder = "cargas"+File.pathSeparator;
   private final Logger logg = LoggerFactory.getLogger(UploadService.class);
-
+  @Generated
   public String save(MultipartFile file) {
     if (!file.isEmpty()) {
       try {

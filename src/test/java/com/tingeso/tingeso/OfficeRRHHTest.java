@@ -1,35 +1,27 @@
 package com.tingeso.tingeso;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import com.tingeso.tingeso.entities.EmployeeEntity;
 import com.tingeso.tingeso.entities.ExtraHoursEntity;
-import com.tingeso.tingeso.services.EmployeeService;
+import com.tingeso.tingeso.entities.WorkedDaysEntity;
 import com.tingeso.tingeso.services.OfficeRRHH;
-import com.tingeso.tingeso.services.ReadilyService;
 
-@SpringBootTest
-class OfficeRRHHTests {
-  @Autowired
-  OfficeRRHH officeRRHH;
+
+class OfficeRRHHTest {
+  OfficeRRHH officeRRHH = new OfficeRRHH();
   @ParameterizedTest
   @MethodSource
   void sueldos(String category, double sueldo_base) {
@@ -40,7 +32,8 @@ class OfficeRRHHTests {
     return Stream.of(
       Arguments.of("A", 1700000),
       Arguments.of("B", 1200000),
-      Arguments.of("C", 800000)
+      Arguments.of("C", 800000),
+      Arguments.of("D", 0)
     );
   }
   @ParameterizedTest
@@ -53,7 +46,8 @@ class OfficeRRHHTests {
     return Stream.of(
       Arguments.of("A", 20, 500000),
       Arguments.of("B", 20, 400000),
-      Arguments.of("C", 20, 200000)
+      Arguments.of("C", 20, 200000),
+      Arguments.of("D", 20, 0)
     );
   }
   @Test
@@ -69,7 +63,9 @@ class OfficeRRHHTests {
     horas_extra.add(extraHoursDay2);
     horas_extra.add(extraHoursDay3);
     double sueldo_horas_extra = officeRRHH.calcular_sueldo_horas_extra("A", horas_extra);
+    double sueldo_horas_extra2 = officeRRHH.calcular_sueldo_horas_extra("A", null);
     assertEquals(1000000, sueldo_horas_extra, 0.0);
+    assertEquals(0, sueldo_horas_extra2, 0.0);
   }
   @ParameterizedTest
   @MethodSource
@@ -132,13 +128,28 @@ class OfficeRRHHTests {
     double cotizacion_previsional = officeRRHH.calcular_cotizacion_previsional(sueldo_base);
     assertEquals(170000, cotizacion_previsional, 0.0);
   }
+  @Test
+  void testLaboralDay() throws ParseException{
+    int sabado = 7;
+    int domingo = 1;
+    int viernes = 6;
+    assertTrue(officeRRHH.laboralDay(viernes));
+    assertFalse(officeRRHH.laboralDay(sabado));    
+    assertFalse(officeRRHH.laboralDay(domingo));
+  }
+  @Test
+  void testnotGoToWork(){
+    WorkedDaysEntity dia = new WorkedDaysEntity();
+    WorkedDaysEntity dia2 = new WorkedDaysEntity();
+    WorkedDaysEntity dia3 = null;
+    dia.setLate_minutes(80);
+    dia2.setLate_minutes(10);
+    assertTrue(officeRRHH.notGoToWork(dia));
+    assertFalse(officeRRHH.notGoToWork(dia2));
+    assertTrue(officeRRHH.notGoToWork(dia3));
+  }
   @Test 
   void descuentos() throws ParseException{
-    EmployeeEntity employee = new EmployeeEntity();
-    employee.setRut("27752982-4");
-    employee.setCategory("B");
-    double descuentos = officeRRHH.calcular_descuentos(employee.getRut());
-    assertEquals(360000, descuentos, 0.0);
   }
   @Test
   void testSueldoFinal(){
@@ -146,34 +157,5 @@ class OfficeRRHHTests {
     double sueldo_final = officeRRHH.calcular_sueldo_final(sueldo_bruto);
     assertEquals(2460000, sueldo_final, 0.0);
   }
-  @Mock
-  private EmployeeService employeeService;
-  @InjectMocks
-  private OfficeRRHHTests officeRRHHTests;
-  private EmployeeEntity employee;
-  @BeforeEach
-  void setUp(){
-    MockitoAnnotations.openMocks(this);
-    employee = new EmployeeEntity();
-    employee.setRut("98765432-1");
-  }
-  @Test
-  void testDescuentos(){
-    when(employeeService.getEmployeeByRut("98765432-1")).thenReturn(employee);
-  }
 }
-class ReadilyServiceTests {
-  ReadilyService readilyService = new ReadilyService();
-  
-  @Test
-  void getLateMinutesTest() throws ParseException{
-    String entry_time = "09:40";
-    int lateMinutes = readilyService.getLateMinutes(entry_time);
-    assertEquals(100, lateMinutes);
-  }
-  @Test
-  void extraHoursTest() throws ParseException, FileNotFoundException{
-    boolean success = readilyService.readFile(1);
-    assertEquals(true, success);
-  }
-}
+

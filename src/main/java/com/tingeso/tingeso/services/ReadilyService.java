@@ -16,6 +16,8 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import lombok.Generated;
+
 @Service
 public class ReadilyService {
   private String folder = "cargas"+File.pathSeparator;
@@ -25,13 +27,13 @@ public class ReadilyService {
   private static final String ENTRY_TIME = "08:00";
   private static final String EXIT_TIME = "18:00";
   private static final String NOMBRE_TXT = "DATA.txt";
-  private DateFormat hours_mins = new SimpleDateFormat("hh:mm");
+  private static final DateFormat hours_mins = new SimpleDateFormat("hh:mm");
   
   public boolean nombre_correcto(String nombre) {
     return nombre.equals(NOMBRE_TXT);
   }
-
-  public boolean readFile(int test)
+  @Generated
+  public boolean readFile()
     throws FileNotFoundException, ParseException {
     try {
       InputStream ins = new FileInputStream(folder + NOMBRE_TXT);
@@ -53,14 +55,12 @@ public class ReadilyService {
             ruts_map.put(rut, temp); // hashmap rut and entry time
           } else {
             ruts_map.get(rut).add(hora); // hashmap exit time
-            if (test != 1) {
-              workedDaysService.insert_worked_day(
-                rut,
-                date,
-                extraHours(ruts_map.get(rut).get(1)),
-                getLateMinutes(ruts_map.get(rut).get(0))
-              );
-            }
+            workedDaysService.insert_worked_day(
+            rut,
+            date,
+            extraHours(ruts_map.get(rut).get(1)),
+            getLateMinutes(ruts_map.get(rut).get(0))
+          );
           }
         }
       }
@@ -69,8 +69,7 @@ public class ReadilyService {
         return false;
     }
   }
-
-  public Integer getLateMinutes(String entry_t) throws ParseException {
+  public int getLateMinutes(String entry_t) throws ParseException {
     long horas_trabajadas =
       hours_mins.parse(entry_t).getTime() -
       hours_mins.parse(ENTRY_TIME).getTime();
@@ -79,8 +78,7 @@ public class ReadilyService {
     }
     return (int) TimeUnit.MILLISECONDS.toMinutes(horas_trabajadas);
   }
-
-  public Integer extraHours(String exit_t) throws ParseException {
+  public int extraHours(String exit_t) throws ParseException {
     Date salida_normal = hours_mins.parse(EXIT_TIME);
     Date salida = hours_mins.parse(exit_t);
     long horas_extra = salida.getTime() - salida_normal.getTime();
