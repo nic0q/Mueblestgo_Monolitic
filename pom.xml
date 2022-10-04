@@ -17,7 +17,8 @@
 		<java.version>17</java.version>
 		<sonar.exclusions>
 			src/main/java/com/tingeso/tingeso/entities/*,
-			src/main/java/com/tingeso/tingeso/controllers/*
+			src/main/java/com/tingeso/tingeso/controllers/*,
+			src/main/java/com/tingeso/tingeso/repositories/*
     </sonar.exclusions>
 	</properties>
 	<dependencies>

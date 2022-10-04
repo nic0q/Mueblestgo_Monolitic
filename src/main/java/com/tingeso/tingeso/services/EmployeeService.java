@@ -1,7 +1,8 @@
 package com.tingeso.tingeso.services;
 
 import com.tingeso.tingeso.entities.EmployeeEntity;
-import com.tingeso.tingeso.repostories.EmployeeRepository;
+import com.tingeso.tingeso.repositories.EmployeeRepository;
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

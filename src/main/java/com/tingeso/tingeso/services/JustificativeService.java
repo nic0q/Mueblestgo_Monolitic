@@ -1,7 +1,7 @@
 package com.tingeso.tingeso.services;
 
 import com.tingeso.tingeso.entities.JustificativeEntity;
-import com.tingeso.tingeso.repostories.JustificativeRepository;
+import com.tingeso.tingeso.repositories.JustificativeRepository;
 
 import java.sql.Date;
 import java.text.ParseException;

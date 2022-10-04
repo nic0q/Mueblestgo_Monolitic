@@ -1,4 +1,4 @@
-package com.tingeso.tingeso.repostories;
+package com.tingeso.tingeso.repositories;
 
 import java.util.List;
 

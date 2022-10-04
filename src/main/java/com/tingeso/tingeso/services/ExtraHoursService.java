@@ -1,7 +1,7 @@
 package com.tingeso.tingeso.services;
 
 import com.tingeso.tingeso.entities.ExtraHoursEntity;
-import com.tingeso.tingeso.repostories.ExtraHoursRepository;
+import com.tingeso.tingeso.repositories.ExtraHoursRepository;
 
 import java.util.List;
 

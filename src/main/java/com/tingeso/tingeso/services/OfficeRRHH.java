@@ -4,7 +4,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.tingeso.tingeso.entities.EmployeeEntity;
 import com.tingeso.tingeso.entities.ExtraHoursEntity;
+import com.tingeso.tingeso.entities.WorkedDaysEntity;
 
 @Service
 public class OfficeRRHH {
@@ -102,38 +102,37 @@ public class OfficeRRHH {
     return 0;
   }
   public double descuentos_tardanza(Integer minutos_tarde, double sueldo_base){
-    double desc_tardanza = 0;
+    double descuento = 0;
     if(minutos_tarde > 45){
-      desc_tardanza = sueldo_base * DESCUENTO_TARDANZA_45MIN;
+      descuento = sueldo_base * DESCUENTO_TARDANZA_45MIN;
     }
     else if(minutos_tarde > 25){
-      desc_tardanza = sueldo_base * DESCUENTO_TARDANZA_25MIN;
+      descuento = sueldo_base * DESCUENTO_TARDANZA_25MIN;
     }
     else if(minutos_tarde > 10){
-      desc_tardanza = sueldo_base * DESCUENTO_TARDANZA_10MIN;
+      descuento = sueldo_base * DESCUENTO_TARDANZA_10MIN;
     }
-    return desc_tardanza;
+    return descuento;
   }
   public double calcular_descuentos(String rut_empleado) throws ParseException{
     double sueldo_base = get_sueldo_base(employeeService.getEmployeeByRut(rut_empleado).getCategory());
     double descuentos = 0;
-    Date date = workedDaysService.obtener_fecha_inicio(); // obtengo la fecha de inicio para recorrer el mes
     Calendar c = Calendar.getInstance(); // creo el calendario
-    c.setTime(date); // seteo a la fecha actual
-    int lastDay = c.getActualMaximum(Calendar.DAY_OF_MONTH); // dia maximo del mes
-    for (int day = 1; day <= lastDay; day++) {
+    c.setTime(workedDaysService.obtener_fecha_inicio()); // seteo a la fecha actual
+    for (int day = 1; day <= c.getActualMaximum(Calendar.DAY_OF_MONTH); day++) {
       c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), day);
       int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
       if(dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY) {
         continue;
       }
-      if(workedDaysService.get_dia_trabajado(rut_empleado, dateFormaty.format(c.getTime())) == null || workedDaysService.get_dia_trabajado(rut_empleado, dateFormaty.format(c.getTime())).getLate_minutes() > 70){
+      WorkedDaysEntity worked_day = workedDaysService.get_dia_trabajado(rut_empleado, dateFormaty.format(c.getTime()));
+      if(worked_day == null || worked_day.getLate_minutes() > 70){
         if(justificativeService.searchJustificative(rut_empleado, dateFormaty.format(c.getTime())) == null){ // no tiene justificativo
           descuentos += sueldo_base * DESCUENTO_INASISTENCIA;
         }
       }
       else{ 
-        descuentos += descuentos_tardanza(workedDaysService.get_dia_trabajado(rut_empleado, dateFormaty.format(c.getTime())).getLate_minutes(), sueldo_base);
+        descuentos += descuentos_tardanza(worked_day.getLate_minutes(), sueldo_base);
       }
     }
     return descuentos;

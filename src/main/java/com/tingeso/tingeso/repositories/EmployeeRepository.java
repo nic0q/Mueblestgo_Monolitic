@@ -1,4 +1,4 @@
-package com.tingeso.tingeso.repostories;
+package com.tingeso.tingeso.repositories;
 
 import com.tingeso.tingeso.entities.EmployeeEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

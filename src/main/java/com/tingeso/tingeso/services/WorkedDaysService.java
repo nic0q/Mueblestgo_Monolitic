@@ -1,7 +1,7 @@
 package com.tingeso.tingeso.services;
 
 import com.tingeso.tingeso.entities.WorkedDaysEntity;
-import com.tingeso.tingeso.repostories.WorkedDaysRepository;
+import com.tingeso.tingeso.repositories.WorkedDaysRepository;
 
 import java.sql.Date;
 import java.text.ParseException;
