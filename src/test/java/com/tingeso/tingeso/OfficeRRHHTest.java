@@ -19,7 +19,6 @@ import com.tingeso.tingeso.entities.ExtraHoursEntity;
 import com.tingeso.tingeso.entities.WorkedDaysEntity;
 import com.tingeso.tingeso.services.OfficeRRHH;
 
-
 class OfficeRRHHTest {
   OfficeRRHH officeRRHH = new OfficeRRHH();
   @ParameterizedTest
@@ -158,4 +157,3 @@ class OfficeRRHHTest {
     assertEquals(2460000, sueldo_final, 0.0);
   }
 }
-

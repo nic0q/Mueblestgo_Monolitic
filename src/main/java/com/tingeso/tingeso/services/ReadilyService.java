@@ -30,7 +30,7 @@ public class ReadilyService {
   private static final DateFormat hours_mins = new SimpleDateFormat("hh:mm");
   
   public boolean nombre_correcto(String nombre) {
-    return nombre.equals(NOMBRE_TXT);
+    return nombre.equals(NOMBRE_TXT) || nombre.equals(NOMBRE_TXT.toLowerCase());
   }
   @Generated
   public boolean readFile()

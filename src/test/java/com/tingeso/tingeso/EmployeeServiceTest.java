@@ -25,7 +25,6 @@ class EmployeeServiceTest {
 
   @InjectMocks
   private EmployeeService employeeService;
-
   private EmployeeEntity employee;
   
   @BeforeEach
