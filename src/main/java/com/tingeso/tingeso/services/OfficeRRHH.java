@@ -122,7 +122,6 @@ public class OfficeRRHH {
   public boolean notGoToWork(WorkedDaysEntity dia){
     return (dia == null || dia.getLate_minutes() > 70);
   }
-  @Generated
   public double calcular_descuentos(String rut_empleado) throws ParseException{
     double sueldo_base = get_sueldo_base(employeeService.getEmployeeByRut(rut_empleado).getCategory());
     double descuentos = 0;
