@@ -1,25 +1,24 @@
 terraform {
-	required_providers {
-		aws = {
-			source  = "hashicorp/aws" # Indica el servicio del proveedor a utilizar
-			version = "~> 4.16"
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws" # Indica el servicio del proveedor a utilizar
+      version = "~> 4.16"
     }
-}
-
-  required_version = ">= 1.2.0"
+  }
+  required_version = ">= 1.3.0"
 }
 
 provider "aws" {
   region = "us-west-2"
 }
 
-resource "aws_instance" "app-simple-aws" {
-  ami           = "ami-0c2ab3b8efb09f272" # Imagen de la maquina virtual / depende de la regi�n
-  instance_type = "t2.micro" # Capacidad de la maquina virtual
+resource "aws_instance" "mueblestgo" {
+  ami           = "ami-0c2ab3b8efb09f272"  # Imagen de la maquina virtual / depende de la región
+  instance_type = "t2.micro"               # Capacidad de la maquina virtual
   key_name      = aws_key_pair.kp.key_name # Indicar key pair de la instancia de EC2 a crear
 
   tags = {
-    Name = "AppSimpleAwsEC2Instance"
+    Name = "mueblestgoEC2Instance"
   }
 }
 
@@ -29,7 +28,7 @@ resource "tls_private_key" "pk" {
 }
 
 resource "aws_key_pair" "kp" {
-  key_name   = "key"       # Crear key pair de acceso a EC2
+  key_name   = "key" # Crear key pair de acceso a EC2
   public_key = tls_private_key.pk.public_key_openssh
 
   provisioner "local-exec" { # Crear "key.pem"

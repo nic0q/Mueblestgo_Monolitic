@@ -15,7 +15,7 @@ import lombok.Generated;
 @Service
 @Generated
 public class UploadService {
-  private String folder = "cargas"+File.pathSeparator;
+  private String folder = "cargas"+File.separator;
   private final Logger logg = LoggerFactory.getLogger(UploadService.class);
   @Generated
   public String save(MultipartFile file) {

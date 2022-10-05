@@ -153,6 +153,9 @@ public class OfficeRRHH {
     double sueldo_base = get_sueldo_base(categoria);
     int anios_servicio = calcular_anios_servicio(entry_date);
     double sueldo = ( sueldo_base + calcular_bonificaciones(anios_servicio , sueldo_base) + calcular_sueldo_horas_extra(categoria, extraHoursService.get_extra_hours_efectivas(rut_empleado)) - calcular_descuentos(rut_empleado));
+    if(sueldo < 0){
+      return 0;
+    }
     return (Math.round(sueldo*100.0)/100.0);
   }
   public double calcular_cotizacion_salud(double sueldo_bruto){

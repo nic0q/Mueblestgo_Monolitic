@@ -40,13 +40,14 @@ public class ReadLoadFileController {
   public String saveTxt( @RequestParam("archivos") MultipartFile file, RedirectAttributes ms) throws FileNotFoundException, ParseException {
     upload.save(file);
     if(!readfile.nombre_correcto(file.getOriginalFilename())){
-      ms.addFlashAttribute("mensaje", "El archivo no pudo ser leido");
+      ms.addFlashAttribute("mensaje", "El archivo es del tipo DATA.txt o data.txt");
       return "redirect:/load-txt";
     }
+    ms.addFlashAttribute("mensaje", "Archivo leído correctamente");
     justificativeService.deleteAll();
     extraHoursService.deleteAll();
     workedDaysService.deleteAll();
     readfile.readFile();
-    return "redirect:/";
+    return "redirect:/load-txt";
   }
 }

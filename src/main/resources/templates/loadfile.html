@@ -4,12 +4,10 @@
   <head>
     <meta charset="ISO-8859-1">
     <title>Cargar archivo</title>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
   </head>
   <body>
     <div class="main-block">
-        <h1>Cargar Archivo txt</h1>
+        <h1>Cargar Archivo DATA.txt</h1>
         <hr>
         <form th:action="@{/save-txt}" method="post" enctype="multipart/form-data">
 					<input type="file" class="form-control my-5	" name="archivos" accept=".txt"><input
@@ -20,25 +18,12 @@
     </div>
   </body>
   <style scoped>
-    .bar {
-      padding: 5px;
-      color: #333;
-      background: #fafafa;
-      border: 1px solid #ccc;
-      border-radius: 50px;
-      margin-top: 5px;
-      width: 220px;
+    @import url('https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap');
+    *{
+      font-family: 'Poppins', sans-serif;
     }
-    .error {
-      color: #ba3939;
-      background: #ffe0e0;
-      border: 1px solid #a33a3a;
-      border-radius: 20px;
-    }
-    .success {
-      color: #2b7515;
-      background: #ecffd6;
-      border: 1px solid #617c42;
+    body {
+      background-color: rgb(31, 31, 31)
     }
     html, body {
       display: flex;
@@ -67,7 +52,7 @@
       opacity: 0.3;
     }
     .main-block {
-      max-width: 340px; 
+      max-width: 390px; 
       min-height: 160px; 
       padding: 10px 0;
       margin: auto;

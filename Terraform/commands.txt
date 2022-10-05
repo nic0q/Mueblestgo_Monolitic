@@ -1,0 +1,7 @@
+terraform fmt
+terraform validate
+terraform init
+terraform plan
+terraform apply
+ssh -i key.pem ec2-user@IP
+docker-compose down --rmi all

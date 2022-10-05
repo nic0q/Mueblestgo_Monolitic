@@ -20,7 +20,7 @@ import lombok.Generated;
 
 @Service
 public class ReadilyService {
-  private String folder = "cargas"+File.pathSeparator;
+  private String folder = "cargas"+File.separator;
   @Autowired
   private WorkedDaysService workedDaysService;
 
@@ -37,6 +37,7 @@ public class ReadilyService {
     throws FileNotFoundException, ParseException {
     try {
       InputStream ins = new FileInputStream(folder + NOMBRE_TXT);
+      System.out.println(folder + NOMBRE_TXT);
       ArrayList<String> dias = new ArrayList<>();
       Map<String, ArrayList<String>> ruts_map = new HashMap<>();
       try (Scanner obj = new Scanner(ins)) {
