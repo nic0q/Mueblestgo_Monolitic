@@ -1,6 +1,5 @@
 package com.tingeso.tingeso.services;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -20,7 +19,6 @@ import lombok.Generated;
 
 @Service
 public class ReadilyService {
-  private String folder = "cargas"+File.separator;
   @Autowired
   private WorkedDaysService workedDaysService;
 
@@ -30,14 +28,13 @@ public class ReadilyService {
   private static final DateFormat hours_mins = new SimpleDateFormat("hh:mm");
   
   public boolean nombre_correcto(String nombre) {
-    return nombre.equals(NOMBRE_TXT) || nombre.equals(NOMBRE_TXT.toLowerCase());
+    return nombre.equals(NOMBRE_TXT);
   }
   @Generated
   public boolean readFile()
     throws FileNotFoundException, ParseException {
     try {
-      InputStream ins = new FileInputStream(folder + NOMBRE_TXT);
-      System.out.println(folder + NOMBRE_TXT);
+      InputStream ins = new FileInputStream(NOMBRE_TXT);
       ArrayList<String> dias = new ArrayList<>();
       Map<String, ArrayList<String>> ruts_map = new HashMap<>();
       try (Scanner obj = new Scanner(ins)) {
