@@ -13,9 +13,6 @@ spring:
       ddl-auto: create
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    #url: jdbc:mysql://localhost:3306/mueblestgo
-    #username: root
-    #password: abcd
-    url: jdbc:mysql://${DB_HOSTNAME}:${DB_PORT}/${DB_NAME}?autorReconnect=true&allowPublicKeyRetrieval=true&useSSL=false
-    username: ${DB_USR}
-    password: ${DB_PSW}
+    url: jdbc:mysql://${DB_HOSTNAME:localhost}:${DB_PORT:3306}/${DB_NAME:mueblestgo}?autorReconnect=true&allowPublicKeyRetrieval=true&useSSL=false
+    username: ${DB_USR:root}
+    password: ${DB_PSW:abcd}
